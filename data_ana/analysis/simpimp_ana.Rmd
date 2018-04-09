@@ -1,0 +1,153 @@
+---
+title: "simpimp_rep"
+author: "Erica Yoon"
+date: "3/7/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(langcog)
+library(here)
+library(ggthemes)
+library(brms)
+```
+
+load data, subj log, order sheet.
+
+```{r load}
+d <- read.csv("../data/simpimpSCresults.csv")
+log <- read.csv("../info/simpimp-subject_log.csv") %>%
+  mutate(English = as.numeric(as.character(fct_recode(English,
+                              "10" = "five-ten",
+                              "95" = "90-95"))))
+order <- read.csv("../info/simpimpSC-itemNumInfo.csv")
+```
+
+join and clean.
+
+```{r clean}
+d1 <- left_join(d, order) %>%
+  left_join(., log) %>%
+  filter(keep_drop == "keep",
+         !is.na(keep_drop),
+         consent == "Y",
+         as.numeric(as.character(English)) > 70,
+         age_group != "?") %>%
+  filter(trial_type != "practice") %>%
+  select(subid, age_group, age, list, trial_num, trial_type, item_num, correct, rt) %>%
+  mutate(correct = as.numeric(as.character(fct_recode(correct,
+                                                      "0" = "N",
+                                                      "1" = "Y")))) %>%
+  mutate(item_rel = case_when(
+    item_num == "1vs1" | item_num == "2vs1" ~ "fewer",
+    item_num == "2vs2" | item_num == "3vs1" ~ "more"
+  )) %>%
+  mutate(age_group = as.numeric(as.character(age_group)))
+
+d1 %>%
+  group_by(age_group, subid) %>%
+  summarise(number = n()) %>%
+  group_by(age_group) %>%
+  summarise(number = n())
+
+d1 %>%
+  group_by(age_group, list, subid) %>%
+  summarise(number = n()) %>%
+  group_by(age_group, list) %>%
+  summarise(number = n())
+```
+
+```{r ana_acc}
+d1_acc <- d1 %>%
+  group_by(age_group, trial_type, item_rel, subid) %>%
+  summarise(correct = mean(correct)) %>%
+  group_by(age_group, trial_type, item_rel) %>%
+  multi_boot_standard(col = "correct") %>%
+  mutate(correct = mean) %>%
+  select(-mean)
+
+p1 <- ggplot(d1_acc, aes(x = age_group, y = correct, group = item_rel, col = item_rel)) + 
+  geom_line() + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper), 
+                  position = position_dodge(width = .1)) + 
+  facet_grid(. ~ trial_type) +
+#   guides(colour=guide_legend(title="Number of features")) +
+  # guides(colour=FALSE) +
+  geom_hline(yintercept=.50,lty=4) +
+  ylab("Accuracy") +
+  xlab("Age (years)") +
+  ylim(c(0, 1)) +
+  theme(text = element_text(size=14)) +
+  theme_few()
+
+p1
+
+p1_2 <- ggplot(filter(d1_acc, age_group != "5"), aes(x = age_group, y = correct, group = item_rel, col = item_rel)) + 
+  geom_line() + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper), 
+                  position = position_dodge(width = .1)) + 
+  facet_grid(. ~ trial_type) +
+#   guides(colour=guide_legend(title="Number of features")) +
+  # guides(colour=FALSE) +
+  geom_hline(yintercept=.50,lty=4) +
+  ylab("Accuracy") +
+  xlab("Age (years)") +
+  ylim(c(0, 1)) +
+  theme(text = element_text(size=14)) +
+  theme_few()
+
+p1_2
+
+
+d1_acc2 <- d1 %>%
+  group_by(trial_type, item_rel, age, subid) %>%
+  summarise(correct = mean(correct))
+
+p1_3 <- ggplot(d1_acc2, aes(x = age, y = correct, group = item_rel, col = item_rel)) + 
+  geom_jitter() + 
+  geom_smooth(method = "lm") +
+  facet_grid(. ~ trial_type) +
+#   guides(colour=guide_legend(title="Number of features")) +
+  # guides(colour=FALSE) +
+  geom_hline(yintercept=.50,lty=4) +
+  ylab("Accuracy") +
+  xlab("Age (years)") +
+  ylim(c(0, 1)) +
+  theme(text = element_text(size=14)) +
+  theme_few()
+
+p1_3
+```
+```{r ana_brms}
+brms_acc <- brm(data=filter(d1, age_group != "5"), correct ~ age_group * trial_type * item_rel + (item_rel | subid), family="bernoulli")
+summary(brms_acc)
+```
+
+```{r ana_rt}
+d1_rt <- d1 %>%
+  filter(correct == "1") %>%
+  group_by(age_group, trial_type, item_rel, subid) %>%
+  summarise(rt = mean(rt)) %>%
+  group_by(age_group, trial_type, item_rel) %>%
+  multi_boot_standard(col = "rt") %>%
+  mutate(rt = mean) %>%
+  select(-mean)
+
+p2 <- ggplot(filter(d1_rt, age_group != "5"), aes(x = age_group, y = rt, group = item_rel, col = item_rel)) + 
+  geom_line() + 
+  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper), 
+                  position = position_dodge(width = .1)) + 
+  facet_grid(. ~ trial_type) +
+#   guides(colour=guide_legend(title="Number of features")) +
+  # guides(colour=FALSE) +
+  geom_hline(yintercept=.50,lty=4) +
+  ylab("rt") +
+  xlab("Age (years)") +
+  theme(legend.position="bottom",
+        text = element_text(size=14)) +
+  theme_few()
+
+p2
+```
