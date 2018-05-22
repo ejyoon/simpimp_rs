@@ -1,2 +1,7 @@
 zz/
 zz*.csv
+simpimp_paper_cache/
+simpimp_paper_files/
+*.fff
+*.ttt
+*.rtf
