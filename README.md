@@ -1,4 +1,3 @@
-# simpimp_rs
 The role of salience in young children's processing of ad-hoc implicatures
 ===
 
