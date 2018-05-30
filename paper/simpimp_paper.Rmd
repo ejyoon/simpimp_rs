@@ -153,6 +153,8 @@ bottom_bound <- mean(log(d$rt)) - 3*sd(log(d$rt))
 d <- d %>%
   filter(log(rt) < top_bound, 
          log(rt) > bottom_bound)
+
+write_csv(d, path = here("data_ana/data","final_analyzed_data.csv"))
 ```
 
 # Introduction
@@ -176,7 +178,7 @@ The distractor, which had a greater number of nameable features, was more salien
 This kind of task may be challenging to children because their executive function is not yet fully developed [@diamond1996; @davidson2006] -- 
 specifically their ability to inhibit responses to salient targets (but see Discussion for further consideration of whether children’s failures should be attributed to their inhibitory control abilities per se). 
 Further, issues in referent selection tasks may reflect analogous problems in naturalistic language comprehension for children, in which the goal is often to figure out what referent a speaker is talking about. 
-Thus,the salience account might apply to pragmatic inferences in real-world language comprehension as well.
+Thus, the salience account might apply to pragmatic inferences in real-world language comprehension as well.
 
 This asymmetry between correct but weaker target meaning and incorrect but more salient distractor meaning is present in other types of implicatures too, though less obviously so. Scalar implicature is typically described as rejecting the term that yields the stronger propositional meaning (e.g., “all” of the cookies) and adding its negation to the weaker proposition (e.g., “some but not all” of the cookies). computing a forced-choice scalar implicature thus also requires avoiding the stronger meaning, which typically describes a larger set size (all of the cookies). Although the referents in such tasks are not always pictured visually side-by-side, they are in at least some paradigms [e.g., @huang2009b]. Such issues could further exacerbate the difficulties of scalar implicature, at least for some age groups. We return in the Discussion to the question of whether distractor salience could plausibly explain some of the data on scalar implicature development.^[As we discuss below, this account is not mutually exclusive with the alternatives hypothesis described above. Indeed, both are likely true and likely contribute to children’s difficulty with implicatures to different degrees in different tasks and at different ages. For more complex alternative sets, the challenge may primarily be identifying the appropriate alternatives, while for simpler alternatives, difficulties may lie primarily in overcoming the pull of the stronger one. 
 ]
