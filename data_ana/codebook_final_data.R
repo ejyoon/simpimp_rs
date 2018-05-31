@@ -11,7 +11,8 @@ d <- read.csv(here("data_ana/data","final_analyzed_data.csv"))
 
 ###### add metadata using attributes 
 attr(d$subid, "label") <- "participant ID"
-attr(d$age_group, "label") <- "age binned"
+attr(d$age_group, "label") <- "age (binned)"
+attr(d$age, "label") <- "age (continuous)"
 attr(d$site, "label") <- "recruitment site"
 attr(d$item_num, "label") <- "number of features"
 attr(d$item_rel, "label") <- "number of features (relative)"
@@ -20,6 +21,7 @@ attr(d$trial_type, "shortDescription") <- unique_values(d$trial_type)
 attr(d$item_num, "shortDescription") <- unique_values(d$item_num)
 attr(d$item_rel, "shortDescription") <- unique_values(d$item_rel)
 attr(d$sample, "shortDescription") <- unique_values(d$sample)
+attr(d$list, "shortDescription") <- paste("pseudorandomized order of trials that each participant went through.", unique_values(d$list))
 
 #### generate the codebook
 makeCodebook(d, 
