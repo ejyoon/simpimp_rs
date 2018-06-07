@@ -2,7 +2,7 @@ The role of salience in young children's processing of ad-hoc implicatures
 ===
 
 ## Manuscript 
-* [Preprint on OSF](FIXME)
+* [Preprint on OSF](https://psyarxiv.com/8p67h)
 * [Same PDF in this repo](paper/simpimp_paper.pdf)
 * [RMarkdown manuscript](paper/simpimp_paper.Rmd), which contains all statistical models, figures and tables
 
