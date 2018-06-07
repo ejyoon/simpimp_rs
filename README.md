@@ -15,6 +15,8 @@ The role of salience in young children's processing of ad-hoc implicatures
 * [Model for accuracy](https://github.com/ejyoon/simpimp_rs/blob/master/data_ana/simpimp_brms_acc.Rds)
 * [Model for RT](https://github.com/ejyoon/simpimp_rs/blob/master/data_ana/simpimp_brms_rt_gaussian.Rds)
 
+Note: The model files are stored using [Git LFS](https://git-lfs.github.com/).
+
 
 
 
