@@ -18,6 +18,7 @@ affiliation:
 author_note: |
       We would like to acknowledge Asher Kaye, Stephanie Hsiang, and Jacqueline Quirke for their assistance in data collection, and thank the staff and families at Children's Discovery Museum of San Jose and Bing Nursery School.
       All data, analysis code, and experiment files and links are available at https://github.com/ejyoon/simpimp_rs.
+      This work was supported by a Postgraduate Doctoral Fellowship provided to EJY by Natural Sciences and Engineering Research Council of Canada, NSF #1456077, and Jacobs Advanced Research Fellowship to MCF.
       
 abstract: |
   Language comprehension often requires making *implicatures*. For example, inferring that "I ate some of the cookies" implicates the speaker ate some *but not all* (scalar implicatures); and "I ate the chocolate-chip cookies" where there are both chocolate chip cookies and raisin cookies in the context implicates that the speaker ate the chocolate chip, but *not both the chocolate chip and raisin cookies* (ad-hoc implicatures). Children’s ability to make scalar implicatures develops around age five, with ad-hoc implicatures emerging somewhat earlier. In the current work, using a time-sensitive tablet paradigm, we examined developmental gains in children’s ad-hoc implicature processing, and found evidence for successful implicature computation by children as young as 3 years in a supportive context and substantial developmental gains in implicature computation from 2 to 5 years. We also tested whether one cause of younger children (2-year-olds)'s consistent failure to make implicatures is their difficulty in inhibiting an alternative interpretation that is more salient than the target meaning (the *salience hypothesis*). Our findings support this hypothesis: Younger children’s failures with implicatures are likely related to effects of the salience mismatch between possible interpretations. 
@@ -33,7 +34,7 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 lineno            : yes
-mask              : yes
+mask              : no
 
 class             : "man"
 output            : papaja::apa6_pdf
