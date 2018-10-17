@@ -171,9 +171,9 @@ write_csv(d, path = here("data_ana/data","final_analyzed_data.csv"))
 
 Language comprehension often requires inferring an intended meaning that goes beyond the literal semantics of what a speaker says. In @grice1975logic's account, conversation is a cooperative act: Speakers choose utterances such that the listener can understand the intended message, and listeners in turn interpret these utterances with the assumption of the speaker's cooperativeness in mind. For example, expecting a cooperative speaker to have produced a maximally informative utterance for the present conversational needs, the listener can make inferences that go beyond the literal meanings of the speaker's words. 
 
-The non-literal interpretations computed through these inferential processes are called pragmatic implicatures. For example, “I ate some of the cookies” implicates that the speaker ate some *but not all of the cookies*, because a cooperative speaker who ate all of them would have said “I ate *all* of the cookies,” which is more informative than the alternative utterance “I ate *some* of the cookies.” This inference is an example of a *scalar implicature*, in which the use of a weaker proposition (“some ~”) leads the interpreter to believe the negation of a proposition with a stronger meaning (“all ~”). Another kind of implicature, *ad-hoc implicature*, is context-based: “I ate the chocolate chip cookies” in a context where two kinds of cookies – chocolate chip and raisin – are available, implicates that the speaker ate the chocolate chip *but not both the chocolate chip cookies and raisin cookies*. In this case, the context sets up a contrast between the proposition offered (“ate the chocolate chip cookies”) and the stronger alternative to be negated (“ate the chocolate chip and raisin cookies”)^[@grice1975logic calls these implicatures generalized (scalar) vs. particularized (ad-hoc), but we use a theory-neutral designation here. An alternative analysis of the second implicature relies on the contrast between “the chocolate chip cookies” and “the cookies” – since the second entails the first, there is an implicature. For our purposes, this relation is still ad-hoc in the sense that there is no reason for “the cookies” to implicate “the chocolate chip cookies” in discourse contexts in which no chocolate chip cookies are part of common ground.].
+The non-literal interpretations computed through these inferential processes are called pragmatic implicatures. For example, “I ate some of the cookies” implicates that the speaker ate some *but not all of the cookies*, because a cooperative speaker who ate all of them would have said “I ate *all* of the cookies,” which is more informative than the alternative utterance “I ate *some* of the cookies.” This inference is an example of a *scalar implicature*, in which the use of a weaker proposition (“some ~”) leads the interpreter to believe the negation of a proposition with a stronger meaning (“all ~”). Another kind of implicature, *ad-hoc implicature*, is context-based: “I ate the chocolate chip cookies” in a context where two kinds of cookies – chocolate chip and raisin – are available, implicates that the speaker ate the chocolate chip *but not both the chocolate chip cookies and raisin cookies*. In this case, the context sets up a contrast between the proposition offered (“ate the chocolate chip cookies”) and the stronger alternative to be negated (“ate the chocolate chip and raisin cookies”)^[@grice1975logic calls these implicatures generalized (scalar) vs. particularized (ad-hoc), but we use a theory-neutral designation here. An alternative analysis of the second implicature relies on the contrast between “the chocolate chip cookies” and “the cookies” – since the second entails the first, there is an implicature. For our purposes, this entailment relation is still ad-hoc in the sense that “the cookies” does not entail “the chocolate chip cookies” in discourse contexts in which no chocolate chip cookies are part of common ground.].
 
-Implicatures like these have been an important case study for pragmatics more broadly. Both classic theories of communication [e.g., @sperber1986] and more recent probabilistic models of pragmatic inference [e.g., @frank2012; see @goodman2016 for review] describe the processes that language users use to compute such implicatures. And a rich psycholinguistic literature has measured adults’ processing of implicatures relative to literal interpretations and found that adults robustly compute implicatures, though their processing time can vary depending on the context [@bott2012; @breheny2013; @huang2018; @grodner2010]. 
+Implicatures like these have been an important case study for pragmatics more broadly. Both classic theories of communication [e.g., @sperber1986] and more recent probabilistic models of pragmatic inference [e.g., @frank2012; see @goodman2016 for review] describe the processes that language users use to compute such implicatures. And a rich psycholinguistic literature has measured adults’ processing of implicatures relative to literal interpretations and found that adults robustly compute implicatures, albeit sometimes more slowly than unambiguous literal meanings [@bott2012; @breheny2013; @huang2009a]. 
 How does the ability to make implicatures develop? Since implicature computation is an important indicator of broader pragmatic understanding, many studies have tested children’s abilities. In these experiments, children tend to have the most difficulty with scalar implicatures relying on quantifiers, modals, and other functional elements. For example, in @papafragou2003’s study, a puppet saw three out of three horses jump over a fence, and described the scene infelicitously by saying “Some of the horses jumped over the fence.” Adults tend to reject this infelicitous statement, whereas 5-year-old children mostly accept it, suggesting that children failed to compute the relevant scalar implicature [though see @katsos2011, for an alternative explanation]. Besides struggling with *some* vs. *all* [@huang2009b; @hurewitz2006; @noveck2001], children in the same age range have consistently failed to compute implicatures involving scalar contrasts, including *a* vs. *some* [@barner2009], *might* vs. *must* [@noveck2001], and *or* vs. *and* [@chierchia2001].
 
 While children struggle on many scalar implicature tasks, they tend to be more successful at computing ad-hoc implicatures (which depend on context, rather than lexical scales). One potential difficulty in a typical scalar implicature task is the need to generate relevant alternatives to a given scalar term. For children to hear “some of the horses jumped over the fence” and derive the implicature “some *but not all*,” they must first realize that “all” is the relevant alternative to “some.” @barner2011 argued that children’s failures in scalar implicature tasks are due to their lack of ability to generate the alternative to negate spontaneously upon hearing the term offered. @barner2011’s claim predicts that children’s implicature computation should improve when they can access the relevant alternatives. Consistent with this claim, children can be primed with relevant scalar alternatives, leading to enhanced implicature performance [@skordos2016]. Furthermore, children show substantially improved implicature computation in ad-hoc implicature tasks – which provided access to relevant alternatives in context – compared to scalar implicature tasks [@horowitzSchneider; @katsos2011; @papafragou2004; @stiller2015]. 
@@ -322,6 +322,80 @@ ggplot(d_acc %>%
         text = element_text(size=14))
 ```
 
+```{r extra1}
+ggplot(d %>%
+  mutate(sample = as.factor(sample)) %>%
+  group_by(sample, age, trial_type, item_rel, subid) %>%
+  summarise(correct = mean(correct)),
+       aes(x = age, y = correct,
+           group = item_rel, col = item_rel)) + 
+  geom_jitter() +
+  geom_smooth() +
+  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+  #              position = position_dodge(width = .1)) + 
+  facet_grid(sample ~ trial_type, labeller = labeller(sample = label_both)) +
+  geom_hline(yintercept=.50,lty=2) +
+  ylab("Accuracy") +
+  xlab("Age (years)") +
+  # ylim(c(0, 1)) +
+  # xlim(c(2, 5.8)) +
+  theme_few() +
+  scale_color_solarized() +
+  guides(col=guide_legend(title="Number of features"),
+         size = guide_legend(title="Number of participants")) +
+    theme(legend.position="bottom",
+        text = element_text(size=14))
+
+```
+
+```{r extra2}
+
+d_accrt_ms <- d %>%
+  mutate(sample = as.factor(sample)) %>%
+  group_by(sample, age, trial_type, item_rel, subid) %>%
+  summarise(correct = mean(correct),
+            rt = mean(rt)) %>%
+  filter(trial_type %in% c("control_double", "inference"), correct %in% c(0, .5, 1)) %>%
+  mutate(correct = as.factor(as.character(correct)))
+
+ggplot(d_accrt_ms,        
+         aes(x = age, y = log(rt),
+           group = correct, col = correct)) + 
+  geom_point() +
+  geom_smooth() +
+  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+  #              position = position_dodge(width = .1)) + 
+  facet_grid(trial_type ~ item_rel, labeller = labeller(correct = label_both)) +
+  # geom_hline(yintercept=.50,lty=2) +
+  ylab("log rt") +
+  xlab("Age (years)") +
+  theme_few() +
+  scale_color_solarized() +
+  guides(col=guide_legend(title="Average accuracy"),
+         size = guide_legend(title="Number of participants")) +
+    theme(legend.position="bottom",
+        text = element_text(size=14))
+```
+
+```{r}
+# brm rt on children who got correct responses only
+d_subid_accOnly <- d_acc_ms %>% 
+  group_by(trial_type, subid) %>%
+  summarise(correct = mean(correct)) %>%
+  filter(correct == 1, trial_type == "inference")
+
+d_accOnly <- d %>% 
+  filter(subid %in% d_subid_accOnly$subid) %>%
+                mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
+                 mutate(rt = log(rt),
+                        age = scale(age))
+
+brms_rt_accOnly <- brm(data=d_accOnly,
+                rt ~ age * trial_type * item_rel + (trial_type + item_rel | subid) + (age + trial_type + item_rel | item) + (age + trial_type + item_rel | sample), family="gaussian", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
+
+summary(brms_rt_accOnly)
+```
+
 ```{r ttest}
 ms <- d %>%
   group_by(sample, age_group, trial_type, item_rel, subid) %>%
@@ -453,7 +527,7 @@ apa_table(rt.tab, caption = "Predictor mean estimates with standard deviation an
 
 With increasing age, children computed both implicatures and unambiguous meanings and identified the target faster (Figure \@ref(fig:rt)). A Bayesian linear mixed-effects model predicting reaction time based on age, trial type and number of features present showed a positive two-way interaction between age and implicature trial (Table \@ref(tab:brmrt)), indicating that the speed of implicature computation did not improve with age as much as the speed of processing unambiguous meanings. Together with the accuracy finding, this result suggests that though children become proficient at determining the *correct* target referents for ad-hoc implicatures by 5 years, implicature processing develops relatively more slowly. 
 
-We also observed a positive two-way interaction between control-double trials and number of features, indicating that children took longer to identify the target in control-double trials with more features than in control-single trials with more features. Interestingly, there was no interaction between inference trials and number of features, or between inference trial, age and number of features. Why would this be? We did not have a pre-specified hypothesis regarding this pattern of data, but we speculate that once a feature is named (e.g., Elmo’s lunchbox has an apple), it is relatively easier to find the feature in an inferential target image than in the distractor image. The target feature is by itself in the target referent, whereas it is grouped with with other features in the distractor. Thus, the inference trials may allow easy perceptual access to the target feature but also competition with the overall perceptual salience of the distractor. These factors might cancel one another out and lead to undifferentiated reaction times and hence the lack of reaction time interactions. The potential advantage of identifying a feature when it is by itself is only speculative, however, and should be examined further in future work.  
+We also observed a positive two-way interaction between control-double trials and number of features, indicating that children took longer to identify the target in control-double trials with more features than in control-single trials with more features. Interestingly, there was no interaction between inference trials and number of features, or between inference trial, age and number of features. Why would this be? We did not have a pre-specified hypothesis regarding this pattern of data, but we speculate that once a feature is named (e.g., Elmo’s lunchbox has an apple), it is relatively easier to find the feature in an inferential target image than in the distractor image. The target feature is by itself in the target referent, whereas it is grouped with with other features in the distractor. Thus, the inference trials may allow easy perceptual access to the target feature but also competition with the overall perceptual salience of the distractor. These factors might cancel one another out and lead to undifferentiated reaction times and hence the lack of reaction time interactions. 
 
 # Discussion
 
@@ -473,7 +547,7 @@ One important challenge for this viewpoint is the nature of the ability that chi
 
 There are several further limitations of our work here. First, our salience manipulation involved manipulation of the number of features present on an item, which might have caused a potential confound between salience and processing time. For example, children’s greater looking to the distractor might have been caused by a real desire to acquire more information, rather than the mere perceptual salience of the distractors. Second, as with nearly all work in the literature on implicature processing, we address the performance of only relatively high socioeconomic status children in a Western context. In our ongoing work we address the generalizability of our task to other developmental contexts [@fortierunderrev]. 
 
-In sum, our work shows evidence that from at least 3 years, children are able to compute ad-hoc implicatures, and that younger children's failures with implicatures on an referent-choosing task are confounded by the salience mismatch between possible referents. This pattern is consistent with a broader generalization, namely that tasks that have typically been used to look at children’s implicature processing have a variety of extraneous processing demands, which may explain why it has been difficult to see children’s underlying pragmatic abilities in such paradigms. Thus, our work demonstrates the importance of using a range of methods to measure children’s pragmatic processing.
+In sum, our work shows evidence that from at least 3 years, children are able to compute ad-hoc implicatures, and that younger children’s failures with implicatures are likely related to effects of the salience mismatch between possible referents. This pattern is consistent with a broader generalization, namely that tasks that have typically been used to look at children’s implicature processing have a variety of extraneous processing demands, which may explain why it has been difficult to see children’s underlying pragmatic abilities in such paradigms. Thus, our work demonstrates the importance of using a range of methods to measure children’s pragmatic processing.
 
 \newpage
 
