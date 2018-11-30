@@ -176,16 +176,16 @@ tablet \\
 
 
 \usepackage{amsthm}
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{corollary}{Corollary}
-\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
 \theoremstyle{definition}
-\newtheorem{example}{Example}
+\newtheorem{example}{Example}[section]
 \theoremstyle{definition}
-\newtheorem{exercise}{Exercise}
+\newtheorem{exercise}{Exercise}[section]
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \newtheorem*{solution}{Solution}
@@ -295,14 +295,18 @@ and a face with glasses and a top-hat, and asked children to choose one
 of the three faces as the referent in a puppet's statement, \enquote{My
 friend has glasses.} In this task, the alternative referent (face with
 glasses and hat) was visible in the context, and thus access to the
-alternative terms (\enquote{glasses and hat}) was made easier. Children
-as young as 3.5 years chose the face with only glasses as the referent,
-suggesting that they successfully computed the implicature that the
-puppet's friend has \enquote{glasses but not both glasses and hat.}
-Similarly, in one study that tested both scalar and ad-hoc implicature
-computation, 4-year-olds successfully made ad-hoc implicatures, but
-performed poorly on scalar implicatures using the same stimuli (Horowitz
-et al., in press).
+alternative terms (\enquote{glasses and hat}) was made easier. In
+general, we assume that the standard route for referring to these visual
+properties of the context will be by naming them. The design intention
+in this study for using simple nouns like \enquote{hat} was therefore to
+make it obvious what the linguistic alternatives would be by virtue of
+the highly accessible names for stimuli. Children as young as 3.5 years
+chose the face with only glasses as the referent, suggesting that they
+successfully computed the implicature that the puppet's friend has
+\enquote{glasses but not both glasses and hat.} Similarly, in one study
+that tested both scalar and ad-hoc implicature computation, 4-year-olds
+successfully made ad-hoc implicatures, but performed poorly on scalar
+implicatures using the same stimuli (Horowitz et al., in press).
 
 Despite older children's success, children below 3 years of age appear
 to struggle with even simple ad-hoc implicatures. Even in the ad-hoc
@@ -377,6 +381,22 @@ with only glasses, face with glasses and hat); in our current paradigm,
 we presented two instead of three potential referents (e.g.~plate with a
 carrot and plate with a carrot and a banana) to minimize cognitive load
 for children.
+
+It should be noted that there are different accounts that try to explain
+exactly what pragmatic inference children are making -- In the earlier
+example in Stiller et al. (2015), \enquote{my friend has glasses} can
+implicate \enquote{my friend has glasses \emph{but no hat}} based on the
+immediate context. A slightly different interpretation can be:
+\enquote{\ldots{}glasses \emph{but no other distinguishing features}}
+(exhausitivity implicature; Groenendijk \& Stokhof, 1985). Yet another
+inference can be probabilistic, where a rational hearer thinks about
+what a speaker is likely to have meant given what the speaker said, and
+makes the best guess based on the probabilities (Goodman \& Frank,
+2016). For the purposes of the current work, however, the study neither
+allows us to differentiate between these proposals nor seeks to
+distinguish them, based on the assumption that all the different
+accounts address implicatures, despite different mechanistic
+explanations for how they are precisely computed.
 
 We present data from two independent samples: The first planned sample
 of children across four age groups (2-, 3-, 4-, and 5-year-olds)
@@ -524,23 +544,23 @@ an obvious, unambiguous referent (e.g., \enquote{cow} as opposed to
 
 \subsection{Data analysis}\label{data-analysis}
 
-We used R (Version 3.4.3; R Core Team, 2017) and the R-packages
-\emph{bindrcpp} (Version 0.2; Müller, 2017a), \emph{brms} (Version
-2.0.1; Bürkner, 2017), \emph{dplyr} (Version 0.7.4; Wickham, Francois,
-Henry, \& Müller, 2017), \emph{forcats} (Version 0.2.0; Wickham, 2017a),
-\emph{ggplot2} (Version 3.0.0; Wickham, 2009), \emph{ggthemes} (Version
-3.4.0; Arnold, 2017), \emph{here} (Version 0.1; Müller, 2017b),
+We used R (Version 3.5.0; R Core Team, 2017) and the R-packages
+\emph{bindrcpp} (Version 0.2.2; Müller, 2017a), \emph{brms} (Version
+2.4.0; Bürkner, 2017), \emph{dplyr} (Version 0.7.6; Wickham, Francois,
+Henry, \& Müller, 2017), \emph{forcats} (Version 0.3.0; Wickham, 2017a),
+\emph{ggplot2} (Version 2.2.1; Wickham, 2009), \emph{ggthemes} (Version
+3.5.0; Arnold, 2017), \emph{here} (Version 0.1; Müller, 2017b),
 \emph{langcog} (Version 0.1.9001; Braginsky, Yurovsky, \& Frank, n.d.),
-\emph{lme4} (Version 1.1.15; D. Bates, Mächler, Bolker, \& Walker,
-2015), \emph{Matrix} (Version 1.2.12; D. Bates \& Maechler, 2017),
-\emph{papaja} (Version 0.1.0.9655; Aust \& Barth, 2017), \emph{purrr}
-(Version 0.2.4; Henry \& Wickham, 2017), \emph{Rcpp} (Eddelbuettel \&
-Balamuta, 2017; Version 0.12.17; Eddelbuettel \& François, 2011),
+\emph{lme4} (Version 1.1.13; D. Bates, Mächler, Bolker, \& Walker,
+2015), \emph{Matrix} (Version 1.2.14; D. Bates \& Maechler, 2017),
+\emph{papaja} (Version 0.1.0.9709; Aust \& Barth, 2017), \emph{purrr}
+(Version 0.2.5; Henry \& Wickham, 2017), \emph{Rcpp} (Eddelbuettel \&
+Balamuta, 2017; Version 0.12.19; Eddelbuettel \& François, 2011),
 \emph{readr} (Version 1.1.1; Wickham, Hester, \& Francois, 2017),
 \emph{stringr} (Version 1.3.1; Wickham, 2017b), \emph{tibble} (Version
-1.4.2; Müller \& Wickham, 2017), \emph{tidyr} (Version 0.7.2; Wickham \&
+1.4.2; Müller \& Wickham, 2017), \emph{tidyr} (Version 0.8.1; Wickham \&
 Henry, 2017), \emph{tidyverse} (Version 1.2.1; Wickham, 2017c), and
-\emph{xtable} (Version 1.8.2; Dahl, 2016) for all our analyses.
+\emph{xtable} (Version 1.8.3; Dahl, 2016) for all our analyses.
 
 \section{Results}\label{results}
 
@@ -838,13 +858,18 @@ There are several further limitations of our work here. First, our
 salience manipulation involved manipulation of the number of features
 present on an item, which might have caused a potential confound between
 salience and processing time. For example, children's greater looking to
-the distractor might have been caused by a real desire to acquire more
-information, rather than the mere perceptual salience of the
-distractors. Second, as with nearly all work in the literature on
-implicature processing, we address the performance of only relatively
-high socioeconomic status children in a Western context. In our ongoing
-work we address the generalizability of our task to other developmental
-contexts (Fortier, Kellier, Fernández Flecha, \& Frank, in prep).
+the distractor (and thus greater processing time) might have been caused
+by a real desire to acquire more information, rather than the mere
+perceptual salience of the distractors. Second, as noted in the
+Introduction, our study does not differentiate between different
+theoretical proposals about how pragmatic inference is being computed in
+the current task. However, we believe that we are addressing development
+of implicatures in general. Third, as with nearly all work in the
+literature on implicature processing, we address the performance of only
+relatively high socioeconomic status children in a Western context. In
+our ongoing work we address the generalizability of our task to other
+developmental contexts (Fortier, Kellier, Fernández Flecha, \& Frank, in
+prep).
 
 In sum, our work shows evidence that from at least 3 years, children are
 able to compute ad-hoc implicatures, and that younger children's
@@ -1007,6 +1032,11 @@ Grodner, D. J., Klein, N. M., Carbary, K. M., \& Tanenhaus, M. K.
 (2010). ?Some,? And possibly all, scalar inferences are not delayed:
 Evidence for immediate pragmatic enrichment. \emph{Cognition},
 \emph{116}(1), 42--55.
+
+\hypertarget{ref-groenendijk1985semantics}{}
+Groenendijk, J., \& Stokhof, M. (1985). On the semantics of questions
+and the pragmatics of answers. \emph{Semantics: Critical Concepts in
+Linguistics}, \emph{288}.
 
 \hypertarget{ref-halberda2003development}{}
 Halberda, J. (2003). The development of a word-learning strategy.
