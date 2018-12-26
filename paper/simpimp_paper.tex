@@ -175,20 +175,6 @@ tablet \\
 
 
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{corollary}{Corollary}
-\newtheorem{proposition}{Proposition}
-\theoremstyle{definition}
-\newtheorem{example}{Example}
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 
 \maketitle
@@ -220,7 +206,7 @@ How does the ability to make pragmatic inferences develop in childhood?
 A general finding is that implicature follows a relatively delayed
 trajectory, with even school-aged children sometimes struggling with
 implicature tasks (Noveck, 2001). A rich literature has explored both
-these developmental changes and possbile hypotheses about the sources of
+these developmental changes and possible hypotheses about the sources of
 difficulty for children (Barner, Brooks, \& Bale, 2011; e.g., Papafragou
 \& Musolino, 2003; Stiller, Goodman, \& Frank, 2015). These
 investigations are important because they shed light on developmental
@@ -278,7 +264,7 @@ cookies}.\footnote{Grice (1975) calls these implicatures generalized
   designation here.} In this case, the context sets up a contrast
 between the proposition offered (\enquote{ate the chocolate chip
 cookies}) and a stronger set of alternatives (\enquote{ate {[}all/both
-the chococolate chip and the raisin{]} cookies}) that is determined by
+the chocolate chip and the raisin{]} the cookies}) that is determined by
 the context (and hence is \enquote{ad hoc} in the sense of being
 constructed in this particular situation).
 
@@ -293,14 +279,14 @@ assumption, the listener must assume that \emph{q} is true; otherwise a
 maxim will be violated. (In this case the maxim is informativeness,
 since saying \enquote{some of the cookies} if \enquote{all of the
 cookies} were true would be underinformative). (C) The speaker is
-presumed to belive that it is mutually known by both parties that the
+presumed to believe that it is mutually known by both parties that the
 listener can work out \emph{q}.
 
-This analysis -- though influential -- is in fact one proposal among
-many, and likely does not map onto either the mental computations
+This analysis -- though influential -- is in fact just one proposal
+among many, and likely does not map onto either the mental computations
 carried out by listeners or the specific issues that lead to
-developmental diffences in implicature ability. Both classic theories of
-communication (e.g., Sperber \& Wilson, 1995) and more recent
+developmental differences in implicature ability. Both classic theories
+of communication (e.g., Sperber \& Wilson, 1995) and more recent
 probabilistic models of pragmatic inference (e.g., Frank \& Goodman,
 2012; see Goodman \& Frank, 2016 for review) describe the processes that
 language users use to compute such implicatures in different ways. For
@@ -317,7 +303,7 @@ implicature in childhood. Despite that, it is useful to review the
 probabilistic view as it helps guide some of our predictions below. We
 consider sentence (2), following the analysis given in Goodman and Frank
 (2016). Under the rational speech act (RSA) model, there is a space of
-meanings (e.g., ATE(chocolate chip \& raisin), ATE(chocoloate chip),
+meanings (e.g., ATE(chocolate chip \& raisin), ATE(chocolate chip),
 etc.), each of which may have some prior probability of being correct.
 There is also a space of utterances (e.g., \enquote{I ate the chocolate
 chip cookies,} \enquote{I ate the cookies}), each of which is either
@@ -447,7 +433,7 @@ hat). The distractor, which had a greater number of nameable features,
 was more salient both perceptually and conceptually, likely drawing
 children's attention more strongly than the target. Under the RSA
 framework -- and very likely under other pragmatic theories, though
-perhaps with a less clearly specified prediction -- such a misatch in
+perhaps with a less clearly specified prediction -- such a mismatch in
 prior probabilities would lead to a weaker pragmatic inference.
 
 The mismatch between stimulus salience (prior probability) and the
@@ -536,7 +522,7 @@ Stiller et al. (2015) example, \enquote{my friend has glasses} can
 implicate \enquote{my friend has glasses \emph{but no hat}} based on the
 immediate context. A slightly different interpretation could be:
 \enquote{\ldots{}glasses \emph{but no other distinguishing features},}
-however (exhausitivity implicature; Groenendijk \& Stokhof, 1985). For
+however (exhaustivity implicature; Groenendijk \& Stokhof, 1985). For
 the purposes of the current work, we cannot differentiate between these
 proposals -- as long as an account incorporated prior information in
 some fashion, it would likely make a similar prediction. Thus, our goal
@@ -707,23 +693,23 @@ an obvious, unambiguous referent (e.g., \enquote{cow} as opposed to
 
 \subsection{Data analysis}\label{data-analysis}
 
-We used R (Version 3.4.3; R Core Team, 2017) and the R-packages
+We used R (Version 3.5.0; R Core Team, 2017) and the R-packages
 \emph{bindrcpp} (Version 0.2.2; Müller, 2017a), \emph{brms} (Version
-2.0.1; Bürkner, 2017), \emph{dplyr} (Version 0.7.7; Wickham, Francois,
-Henry, \& Müller, 2017), \emph{forcats} (Version 0.2.0; Wickham, 2017a),
-\emph{ggplot2} (Version 3.0.0; Wickham, 2009), \emph{ggthemes} (Version
-3.4.0; Arnold, 2017), \emph{here} (Version 0.1; Müller, 2017b),
+2.4.0; Bürkner, 2017), \emph{dplyr} (Version 0.7.8; Wickham, Francois,
+Henry, \& Müller, 2017), \emph{forcats} (Version 0.3.0; Wickham, 2017a),
+\emph{ggplot2} (Version 3.1.0; Wickham, 2009), \emph{ggthemes} (Version
+3.5.0; Arnold, 2017), \emph{here} (Version 0.1; Müller, 2017b),
 \emph{langcog} (Version 0.1.9001; Braginsky, Yurovsky, \& Frank, n.d.),
-\emph{lme4} (Version 1.1.15; D. Bates, Mächler, Bolker, \& Walker,
-2015), \emph{Matrix} (Version 1.2.12; D. Bates \& Maechler, 2017),
-\emph{papaja} (Version 0.1.0.9655; Aust \& Barth, 2017), \emph{purrr}
+\emph{lme4} (Version 1.1.13; D. Bates, Mächler, Bolker, \& Walker,
+2015), \emph{Matrix} (Version 1.2.14; D. Bates \& Maechler, 2017),
+\emph{papaja} (Version 0.1.0.9709; Aust \& Barth, 2017), \emph{purrr}
 (Version 0.2.5; Henry \& Wickham, 2017), \emph{Rcpp} (Eddelbuettel \&
-Balamuta, 2017; Version 0.12.19; Eddelbuettel \& François, 2011),
+Balamuta, 2017; Version 1.0.0; Eddelbuettel \& François, 2011),
 \emph{readr} (Version 1.1.1; Wickham, Hester, \& Francois, 2017),
 \emph{stringr} (Version 1.3.1; Wickham, 2017b), \emph{tibble} (Version
-1.4.2; Müller \& Wickham, 2017), \emph{tidyr} (Version 0.7.2; Wickham \&
+1.4.2; Müller \& Wickham, 2017), \emph{tidyr} (Version 0.8.1; Wickham \&
 Henry, 2017), \emph{tidyverse} (Version 1.2.1; Wickham, 2017c), and
-\emph{xtable} (Version 1.8.2; Dahl, 2016) for all our analyses.
+\emph{xtable} (Version 1.8.3; Dahl, 2016) for all our analyses.
 
 \section{Results}\label{results}
 
@@ -743,7 +729,7 @@ the mean (upper bound: 14.04 seconds; lower bound: 0.47 second;
 percentage of data excluded: 1.67 \%). Throughout this section, we used
 Bayesian linear mixed-effects models (\texttt{brms} package in R;
 Bürkner, 2017) using crossed random effects of participant, item, and
-sample (original vs.~replicationn) with the maximal random effects
+sample (original vs.~replication) with the maximal random effects
 structure supported by the design (Barr, Levy, Scheepers, \& Tily, 2013;
 A. Gelman \& Hill, 2006). Age is plotted in year bins, but was analyzed
 as a continuous variable, scaled and centered, in our statistical model.
@@ -927,61 +913,64 @@ of pragmatic inference, we predicted that increasing the salience of
 this distractor would result in decreased performance for younger
 children while increasing performance for older children. The first part
 of this prediction was clearly supported in our data, with younger
-children performing worse when the distractor was more salient.
+children performing worse when the distractor was more salient, with
+more mixed support for the second part.
 
-Although we observed numerical hints of a gain in accuracy for older
-children in one sample, we did not see a consistent facilitation effect.
-We suspect this finding is due to a ceiling effect: Referent selection
-via ad-hoc implicature is relatively trivial for four-year-olds (see
-also Horowitz et al., 2018). However, we saw a possible age-related
-advantage of pragmatic strengthening in the speed of computation:
-Whereas younger children tended to be slower in trials with a greater
-number of features for both unambiguous and inferential meanings, older
-children began to close the gap and become faster to compute
-implicatures given increased distractor saliency.
+In particular, although we observed numerical hints of a gain in
+accuracy for older children in one sample, we did not see a consistent
+facilitation effect due to our manipulation. We suspect this finding is
+due to a ceiling effect: Referent selection via ad-hoc implicature is
+relatively trivial for four-year-olds (see also Horowitz et al., 2018).
+However, we saw a possible age-related advantage of pragmatic
+strengthening in the speed of computation: Whereas younger children
+tended to be slower in trials with a greater number of features for both
+unambiguous and inferential meanings, older children began to close the
+gap and become faster to compute implicatures given increased distractor
+saliency.
 
-Of course it is important to stress that the salience account is not
-mutually exclusive with other accounts of children's difficulties in
-implicature. For example, the alternatives hypothesis described above
-(Barner et al., 2011) is independently supported by several experiments
-on scalar implicature (Horowitz et al., 2018; Skordos \& Papafragou,
-2016). Indeed, both are likely true and likely contribute to children's
-difficulty with implicatures to different degrees in different tasks and
-at different ages. For more complex alternative sets, the challenge may
-primarily be identifying the appropriate alternatives, while for simpler
-alternatives, difficulties may lie primarily in overcoming the pull of
-the stronger one. In our task, minimizing the challenge to both identify
-alternatives and resist the pull of a salient alternative allowed even
-some two-year-olds to succeed in choosing the correct inferential
-target.
+Our findings here support the idea that salience-related competition
+plays a role in young children's difficulties with ad-hoc implicature.
+Our salience account is most manifest in the kind of simple referent
+selection tasks we used here. Despite this, following the general
+mapping of perceptual salience to prior probabilities in the RSA
+framework more broadly, we speculate that the account may apply more
+broadly to implicature computation beyond the scope of these tasks. Any
+pragmatic implicature requires an asymmetry in the \enquote{strength} of
+the alternatives. In ad-hoc referent-selection contexts, the stronger
+(more salient) alternative is the item with more features. In scalar
+implicatures, the implicature that you ate \emph{some but not all of the
+cookies} is only possible because there is a stronger alternative
+(\enquote{all}). It remains an open empirical question whether the a
+salience mismatch account -- perhaps relabeled as a prior probability
+mismatch -- might explain some aspects of children's difficulty with
+these other cases of implicatures as well.
 
-The salience account also raises important methodological
-considerations, not only for referent-selection paradigms (with
-\emph{visually} salient distractors) but other tasks where participants
-might have biases toward more \emph{conceptually} salient answers. Bias
-due to salience seems to exist even in verbal answers to questions, for
-example, as younger children (2-year-olds) show a bias toward
-\enquote{yes} compared to \enquote{no} in answering verbal questions,
-but this bias goes away with age (Fritzley \& Lee, 2003), and there is
-some evidence that this bias is related to both their verbal ability and
-inhibitory control (Moriguchi, Okanda, \& Itakura, 2008). Thus this bias
-toward perceptually or conceptually salient answers need to be taken
-into account in designing tasks for younger children, not only for
-implicature computation but for any domains that make use of children's
-judgments that are potentially biased between possible answers.
+The salience hypothesis we tested here relates to broader methodological
+issues in experiments for young children with both visual and verbal
+alternative responses. One example of such a bias is the tendency of
+2-year-olds to show a bias toward \enquote{yes} compared to \enquote{no}
+in answering questions. This bias disappears with age (Fritzley \& Lee,
+2003), and there is some evidence that it is related to children's
+verbal ability and inhibitory control (Moriguchi, Okanda, \& Itakura,
+2008). In general, as work on pragmatic inference begins to examine
+younger children's abilities, it is important to take into consideration
+a range of cognitive factors in task design.
 
-One further potential application of our account is to word learning
-contexts, where children's learning of a novel word is facilitated when
-the target referent is more (not less) salient than its alternative. For
-example, Frank and Goodman (2014) used an analogous pragmatic inference
-paradigm in a word learning context: Participants heard a novel label
-(e.g., \enquote{a dinosaur with a \emph{dax}}) used to describe an
-object with two features (a dinosaur with a hat and a bandanna) in the
-presence of another dinosaur that had one but not the other of the
-features (a dinosaur with a hat only). 3- and 4-year-olds performed
-quite well in mapping the novel label to the unique feature (which would
-make the labeling more informative). In this paradigm, the novel label
-was being mapped to the more, rather than less, salient object.
+Following this line of reasoning, one further potential application of
+our account is to word learning contexts, where children's learning of a
+novel word is facilitated when the target referent is more (not less)
+salient than its alternative. For example, Frank and Goodman (2014) used
+an analogous pragmatic inference paradigm in a word learning context:
+Participants heard a novel label (e.g., \enquote{a dinosaur with a
+\emph{dax}}) used to describe an object with two features (a dinosaur
+with a hat and a bandanna) in the presence of another dinosaur that had
+one but not the other of the features (a dinosaur with a hat only). 3-
+and 4-year-olds performed quite well in mapping the novel label to the
+unique feature, even though in many respects this task should be more,
+not less, difficult than ad-hoc implicature. One reason for this success
+might be that the novel label was being mapped to the more, rather than
+less, salient object.
+
 Similarly, in classic \enquote{mutual exclusivity} paradigms (Markman \&
 Wachtel, 1988), by around 18 months, participants succeed in mapping a
 novel label to a novel object (Halberda, 2003). While the mechanisms
@@ -991,7 +980,7 @@ children's success (see Markman, Wasow, \& Hansen, 2003 for discussion).
 Overall, evidence for children's pragmatic word learning emerges earlier
 than implicature computation: Children succeed in these tasks
 substantially at earlier ages than even in our simplified implicature
-paradigm. We migth speculate that one reason for this asymmetry is
+paradigm. We might speculate that one reason for this asymmetry is
 because implicature tasks require selecting the \emph{less} salient
 alternative while word learning tasks typically ask participants to
 select a \emph{more} salient alternative.
@@ -1000,19 +989,25 @@ Our findings help in the construction of a comprehensive developmental
 account of processing of implicatures, and pragmatic inferences in
 general. In the samples that have been studied in this literature, by 2
 years of age, children begin to be aware that informativeness is
-important to communication. Nevertheless, our findings suggest that the
-salience contrasts inherent in many pragmatic situations may keep them
-from successfully processing implicatures. Further, these same factors
-are plausibly in play during pragmatic word learning tasks (Yurovsky \&
-Frank, 2017). By 3 to 4 years, the ability to inhibit these salient
-targets is more developed, and they start to compute ad-hoc implicatures
-when relevant alternatives to the speaker's words are provided in
-context. Scalar implicature performance develops more slowly, however,
-as children's ability to access the relevant alternatives (and their
-semantics) is only beginning to emerge (Barner et al., 2011; Horowitz et
-al., 2018; Skordos \& Papafragou, 2016); their performance during these
-ages is highly variable and dependent on the nature of the context and
-its pragmatic demands (Papafragou \& Tantalou, 2004).
+important to communication. By 3 to 4 years, the ability to inhibit
+these salient targets is more developed, and they start to compute
+ad-hoc implicatures when relevant alternatives to the speaker's words
+are provided in context. Scalar implicature performance develops more
+slowly, however, as children's ability to access the relevant
+inferential alternatives is only beginning to emerge in the period from
+4 top 6 (Barner et al., 2011; Horowitz et al., 2018; Skordos \&
+Papafragou, 2016); their performance during these ages is highly
+variable and dependent on the nature of the context and its pragmatic
+demands (Papafragou \& Tantalou, 2004).
+
+As illlustrated by this timeline, the salience hypothesis we tested is
+not mutually exclusive with other accounts of children's difficulties in
+implicature. For example, the \enquote{alternatives hypothesis} (Barner
+et al., 2011) is independently supported by a variety of experiments
+(Horowitz et al., 2018; Skordos \& Papafragou, 2016). Indeed, both the
+salience and alternatives hypotheses are likely true and likely
+contribute to children's difficulty with implicatures to different
+degrees in different tasks and at different ages.
 
 One important challenge for this viewpoint is the nature of the ability
 that children use to overcome the pull of the salient alternative. One
