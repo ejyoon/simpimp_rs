@@ -1,4 +1,4 @@
-\documentclass[man]{apa6}
+\documentclass[mask,man]{apa6}
 
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -168,13 +168,27 @@ possible interpretations.}
   \keywords{Pragmatics; cognitive development; language processing; implicature;
 tablet \\
 
-    \indent Word count: 6717
+    \indent Word count: 9136
   }
 
 
 
 
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
 \begin{document}
 
 \maketitle
@@ -207,7 +221,7 @@ A general finding is that implicature follows a relatively delayed
 trajectory, with even school-aged children sometimes struggling with
 implicature tasks (Noveck, 2001). A rich literature has explored both
 these developmental changes and possible hypotheses about the sources of
-difficulty for children (Barner, Brooks, \& Bale, 2011; e.g., Papafragou
+difficulty for children (e.g., Barner, Brooks, \& Bale, 2011; Papafragou
 \& Musolino, 2003; Stiller, Goodman, \& Frank, 2015). These
 investigations are important because they shed light on developmental
 changes in children's ability to comprehend language in context more
@@ -614,16 +628,16 @@ excluded for completing fewer than 10 trials).
 
 On each trial, participants saw two images: a target and distractor,
 which could either be an item with a single feature (e.g.~a lunchbox
-with only an apple or only an orange), or an item with double features
-(e.g., a lunchbox with an apple and an orange). In each trial, a
-pre-recorded voice said a sentence (e.g., \enquote{Look at these
-lunchboxes. Elmo's lunchbox has an apple.}). After participants chose
-the object that was being referred to, a green box appeared around the
-chosen object to show that the choice had been made. For each trial, we
-recorded the participant's accuracy, or whether he or she selected the
-correct target referent, and reaction time, or time spent between naming
-of the referent (\enquote{\ldots{}an \emph{apple}}) and the
-participant's referent selection.
+with only an apple), or an item with double features (e.g., a lunchbox
+with an apple and an orange). In each trial, a pre-recorded voice said a
+sentence (e.g., \enquote{Look at these lunchboxes. Elmo's lunchbox has
+an apple.}). After participants chose the object that was being referred
+to, a green box appeared around the chosen object to show that the
+choice had been made. For each trial, we recorded the participant's
+accuracy, or whether he or she selected the correct target referent, and
+reaction time, or time spent between naming of the referent
+(\enquote{\ldots{}an \emph{apple}}) and the participant's referent
+selection.
 
 There were three types of test trials (shown at the top of each panel in
 Figure \ref{fig:stimuli}). In \emph{implicature} trials, the target item
@@ -693,23 +707,23 @@ an obvious, unambiguous referent (e.g., \enquote{cow} as opposed to
 
 \subsection{Data analysis}\label{data-analysis}
 
-We used R (Version 3.5.0; R Core Team, 2017) and the R-packages
+We used R (Version 3.4.3; R Core Team, 2017) and the R-packages
 \emph{bindrcpp} (Version 0.2.2; Müller, 2017a), \emph{brms} (Version
-2.4.0; Bürkner, 2017), \emph{dplyr} (Version 0.7.8; Wickham, Francois,
-Henry, \& Müller, 2017), \emph{forcats} (Version 0.3.0; Wickham, 2017a),
-\emph{ggplot2} (Version 3.1.0; Wickham, 2009), \emph{ggthemes} (Version
-3.5.0; Arnold, 2017), \emph{here} (Version 0.1; Müller, 2017b),
+2.0.1; Bürkner, 2017), \emph{dplyr} (Version 0.7.7; Wickham, Francois,
+Henry, \& Müller, 2017), \emph{forcats} (Version 0.2.0; Wickham, 2017a),
+\emph{ggplot2} (Version 3.0.0; Wickham, 2009), \emph{ggthemes} (Version
+3.4.0; Arnold, 2017), \emph{here} (Version 0.1; Müller, 2017b),
 \emph{langcog} (Version 0.1.9001; Braginsky, Yurovsky, \& Frank, n.d.),
-\emph{lme4} (Version 1.1.13; D. Bates, Mächler, Bolker, \& Walker,
-2015), \emph{Matrix} (Version 1.2.14; D. Bates \& Maechler, 2017),
-\emph{papaja} (Version 0.1.0.9709; Aust \& Barth, 2017), \emph{purrr}
+\emph{lme4} (Version 1.1.15; D. Bates, Mächler, Bolker, \& Walker,
+2015), \emph{Matrix} (Version 1.2.12; D. Bates \& Maechler, 2017),
+\emph{papaja} (Version 0.1.0.9655; Aust \& Barth, 2017), \emph{purrr}
 (Version 0.2.5; Henry \& Wickham, 2017), \emph{Rcpp} (Eddelbuettel \&
-Balamuta, 2017; Version 1.0.0; Eddelbuettel \& François, 2011),
+Balamuta, 2017; Version 0.12.19; Eddelbuettel \& François, 2011),
 \emph{readr} (Version 1.1.1; Wickham, Hester, \& Francois, 2017),
 \emph{stringr} (Version 1.3.1; Wickham, 2017b), \emph{tibble} (Version
-1.4.2; Müller \& Wickham, 2017), \emph{tidyr} (Version 0.8.1; Wickham \&
+1.4.2; Müller \& Wickham, 2017), \emph{tidyr} (Version 0.7.2; Wickham \&
 Henry, 2017), \emph{tidyverse} (Version 1.2.1; Wickham, 2017c), and
-\emph{xtable} (Version 1.8.3; Dahl, 2016) for all our analyses.
+\emph{xtable} (Version 1.8.2; Dahl, 2016) for all our analyses.
 
 \section{Results}\label{results}
 
@@ -741,13 +755,13 @@ as a continuous variable, scaled and centered, in our statistical model.
 selecting the target in the original and replication samples (rows) in
 different trial types (columns). Data are binned into 6-month age groups
 for visualization purposes (all analyses are conducted on continuous
-data). Lines are loess smoothing functions. Blue lines represent trials
+data). Lines are loess smoothing functions. Solid lines represent trials
 in which there were fewer features present (2-vs-1 for control-double
-and implicature, 1-vs-1 for control-single) and red lines represent
+and implicature, 1-vs-1 for control-single) and dashed lines represent
 trials with more features (3-vs-1 for control-double and implicature,
 2-vs-2 for control-single). Error bars are 95\% confidence intervals,
 and are placed at the mean of the age bin and offset slightly to avoid
-overplotting. Dashed line represents a conservative chance level at
+overplotting. Dotted line represents a conservative chance level at
 50\%.}
 \end{figure}
 

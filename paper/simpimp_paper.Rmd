@@ -25,7 +25,7 @@ abstract: |
  
   
 keywords          : "Pragmatics; cognitive development; language processing; implicature; tablet"
-wordcount         : "6717"
+wordcount         : "9136"
 
 bibliography      : ["simpimp.bib"]
 
@@ -34,10 +34,10 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 lineno            : yes
-mask              : no
+mask              : yes
 
 class             : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_word
 ---
 
 ```{r load_packages, include = FALSE}
@@ -173,7 +173,7 @@ Language comprehension in context often requires inferring an intended meaning t
 
 \noindent A reasonable listener could assume from this sentence that the speaker ate some *but not all of the cookies*. Inferences like this one, known as *implicatures*, are commonplace in conversation and provide one important tool for speakers to use language flexibly. They also are related to a broader set of pragmatic phenomena like underspecification [@levinson2000] and politeness [@brown1987]. 
 
-How does the ability to make pragmatic inferences develop in childhood? A general finding is that implicature follows a relatively delayed trajectory, with even school-aged children sometimes struggling with implicature tasks [@noveck2001]. A rich literature has explored both these developmental changes and possible hypotheses about the sources of difficulty for children [e.g., @papafragou2003;@barner2011;@stiller2015]. These investigations are important because they shed light on developmental changes in children's ability to comprehend language in context more broadly, as well as the processing challenges posed by pragmatic language comprehension.
+How does the ability to make pragmatic inferences develop in childhood? A general finding is that implicature follows a relatively delayed trajectory, with even school-aged children sometimes struggling with implicature tasks [@noveck2001]. A rich literature has explored both these developmental changes and possible hypotheses about the sources of difficulty for children [e.g., @barner2011; @papafragou2003; @stiller2015]. These investigations are important because they shed light on developmental changes in children's ability to comprehend language in context more broadly, as well as the processing challenges posed by pragmatic language comprehension.
 
 In the current paper, we investigate the developmental trajectory of the processing of one specific type of implicatures, *ad-hoc implicatures*, which tend to be easier for young children than other implicatures that rely on more sophisticated linguistic knowledge [@papafragou2003;@stiller2015;@horowitz2018]. In addition, we test a specific proposal for why young children might find even these inferences challenging, namely that the inferential target is typically less salient than the distractor. In the remainder of the Introduction, before describing our own work we first introduce pragmatic implicature in more depth, then review developmental evidence on implicature.
 
@@ -290,7 +290,7 @@ In the replication sample, a total of 116 children were recruited, all at Childr
 knitr::include_graphics("figs/stimuli.png", dpi = 170)
 ```
 
-On each trial, participants saw two images: a target and distractor, which could either be an item with a single feature (e.g. a lunchbox with only an apple or only an orange), or an item with double features (e.g., a lunchbox with an apple and an orange). In each trial, a pre-recorded voice said a sentence (e.g., "Look at these lunchboxes. Elmo's lunchbox has an apple."). After participants chose the object that was being referred to, a green box appeared around the chosen object to show that the choice had been made. For each trial, we recorded the participant’s accuracy, or whether he or she selected the correct target referent, and reaction time, or time spent between naming of the referent ("...an *apple*") and the participant’s referent selection.
+On each trial, participants saw two images: a target and distractor, which could either be an item with a single feature (e.g. a lunchbox with only an apple), or an item with double features (e.g., a lunchbox with an apple and an orange). In each trial, a pre-recorded voice said a sentence (e.g., "Look at these lunchboxes. Elmo's lunchbox has an apple."). After participants chose the object that was being referred to, a green box appeared around the chosen object to show that the choice had been made. For each trial, we recorded the participant’s accuracy, or whether he or she selected the correct target referent, and reaction time, or time spent between naming of the referent ("...an *apple*") and the participant’s referent selection.
 
 There were three types of test trials (shown at the top of each panel in Figure \@ref(fig:stimuli)). In *implicature* trials, the target item had a single feature (e.g., an apple), and the distractor item had two or three features (see below for the manipulation of number of features) -- one that was in common with the target (e.g., an apple) and the other feature(s) that was/were unique (e.g., an orange). The test sentence named the feature that was common to the target and distractor. Thus, if participants understood that "Elmo's lunchbox has an apple" implicates "Elmo's lunchbox has an apple *but not an orange*" in the given context, it was predicted that they would choose the target more often than the distractor; otherwise, if they did not make implicatures, they would choose the two at equal rates (or even choose the distractor more often depending on the degree of saliency contrast -- see below).
 
@@ -315,7 +315,7 @@ We were interested in children’s processing of implicatures in comparison to u
 
 As per our standard operating procedures, we removed trials in which the log of reaction time was more than 3 standard deviations above or below the mean (upper bound: `r exp(top_bound)/1000` seconds; lower bound: `r exp(bottom_bound)/1000` second; percentage of data excluded: `r rt_filter$prop_fail` %). Throughout this section, we used Bayesian linear mixed-effects models [`brms` package in R; @R-brms] using crossed random effects of participant, item, and sample (original vs. replication) with the maximal random effects structure supported by the design [@gelman2006data; @barr2013random]. Age is plotted in year bins, but was analyzed as a continuous variable, scaled and centered, in our statistical model. 
 
-```{r accuracy, fig.cap="Proportion of 2- to 5-year-old children selecting the target in the original and replication samples (rows) in different trial types (columns). Data are binned into 6-month age groups for visualization purposes (all analyses are conducted on continuous data). Lines are loess smoothing functions. Blue lines represent trials in which there were fewer features present (2-vs-1 for control-double and implicature, 1-vs-1 for control-single) and red lines represent trials with more features (3-vs-1 for control-double and implicature, 2-vs-2 for control-single). Error bars are 95% confidence intervals, and are placed at the mean of the age bin and offset slightly to avoid overplotting. Dashed line represents a conservative chance level at 50\\%."}
+```{r accuracy, fig.cap="Proportion of 2- to 5-year-old children selecting the target in the original and replication samples (rows) in different trial types (columns). Data are binned into 6-month age groups for visualization purposes (all analyses are conducted on continuous data). Lines are loess smoothing functions. Solid lines represent trials in which there were fewer features present (2-vs-1 for control-double and implicature, 1-vs-1 for control-single) and dashed lines represent trials with more features (3-vs-1 for control-double and implicature, 2-vs-2 for control-single). Error bars are 95% confidence intervals, and are placed at the mean of the age bin and offset slightly to avoid overplotting. Dotted line represents a conservative chance level at 50\\%."}
 d_acc_ms <- d %>%
   mutate(sample = as.factor(sample)) %>%
   group_by(sample, age_group, trial_type, item_rel, subid) %>%
@@ -341,20 +341,26 @@ ggplot(d_acc %>%
                                         "implicature" = "inference"),
                 age_group = as.numeric(as.character(age_group))+.5), 
        aes(x = age_group, y = correct,
-           group = item_rel, col = item_rel)) + 
-  geom_smooth(span= 2, aes(weight = n), se = FALSE) + 
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
+           group = item_rel, linetype = item_rel)) + 
+  geom_smooth(col="grey40", span= 2, aes(weight = n), se = FALSE, size=.7) + 
+  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+  #              position = position_dodge(width = .1)) + 
+  geom_linerange(aes(x = age_group, ymin = ci_lower, ymax = ci_upper, 
+                     group = item_rel), inherit.aes = T,
+                 color = "black", alpha = 0.7, size = .7,
+                 position = position_dodge(width = 0.15)) +
+  # scale_color_grey(end = 0.4)+
   facet_grid(sample ~ trial_type, labeller = labeller(sample = label_both)) +
-  geom_hline(yintercept=.50,lty=2) +
+  geom_hline(yintercept=.50,lty="dotted", alpha=.5) +
   ylab("Accuracy") +
   xlab("Age (years)") +
   ylim(c(0, 1)) +
   xlim(c(2, 5.8)) +
   theme_few() +
-  scale_color_solarized() +
-  guides(col=guide_legend(title="Number of features"),
-         size = guide_legend(title="Number of participants")) +
+  # scale_color_solarized() +
+  guides(linetype=guide_legend(title="Number of features"),
+         size = guide_legend(title="Number of participants"),
+         col=FALSE) +
     theme(legend.position="bottom",
         text = element_text(size=14))
 ```
@@ -443,19 +449,27 @@ ggplot(d_rt %>%
                                         "control-double" = "control_double",
                                         "implicature" = "inference")), 
  aes(x = age_group, y = rt, 
-                  group = item_rel, col = item_rel)) + 
-  geom_smooth(span= 2, aes(weight = n), se = FALSE) + 
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
+                  group = item_rel, linetype = item_rel)) + 
+  geom_smooth(col="grey40", span= 2, aes(weight = n), se = FALSE, size = .7) + 
+  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+  #              position = position_dodge(width = .1)) + 
+  geom_linerange(aes(x = age_group, ymin = ci_lower, ymax = ci_upper, 
+                     group = item_rel), inherit.aes = T,
+                 color = "black", alpha = 0.7, size = .7,
+                 position = position_dodge(width = 0.15)) +
+  # scale_alpha_discrete(range = c(0.4, 0.8)) +
+  # scale_color_grey(end = 0.4)+
   facet_grid(sample ~ trial_type, labeller = labeller(sample = label_both)) +
   ylab("Reaction time (s)") +
   xlab("Age (years)") +
   theme_few() +
-  scale_color_solarized() +
-    guides(col=guide_legend(title="Number of features"),
-         size = guide_legend(title="Number of participants"))+
+  # scale_color_solarized() +
+    guides(linetype=guide_legend(title="Number of features"),
+         size = guide_legend(title="Number of participants"),
+         col = FALSE)+
   theme(text = element_text(size=14),
-        legend.position="bottom")
+        legend.position="bottom",
+        legend.key = element_rect(colour = "transparent", fill = "white"))
 ```
 
 ```{r brmrt, echo = F, results = 'asis'}
