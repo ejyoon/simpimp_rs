@@ -21,7 +21,7 @@ author_note: |
       This work was supported by a Postgraduate Doctoral Fellowship provided to EJY by Natural Sciences and Engineering Research Council of Canada, NSF #1456077, and Jacobs Advanced Research Fellowship to MCF.
       
 abstract: |
-  Language comprehension often requires making *implicatures*. For example, inferring that "I ate some of the cookies" implicates the speaker ate some *but not all* (scalar implicatures); and "I ate the chocolate-chip cookies" where there are both chocolate chip cookies and raisin cookies in the context implicates that the speaker ate the chocolate chip, but *not both the chocolate chip and raisin cookies* (ad-hoc implicatures). Children’s ability to make scalar implicatures develops around age five, with ad-hoc implicatures emerging somewhat earlier. In the current work, using a time-sensitive tablet paradigm, we examined developmental gains in children’s ad-hoc implicature processing, and found evidence for successful implicature computation by children as young as 3 years in a supportive context and substantial developmental gains in implicature computation from 2 to 5 years. We also tested whether one cause of younger children (2-year-olds)'s consistent failure to make implicatures is their difficulty in inhibiting an alternative interpretation that is more salient than the target meaning (the *salience hypothesis*). Our findings supported this hypothesis: Younger children’s failures with implicatures were related to effects of the salience mismatch between possible interpretations. 
+  Language comprehension often requires making *implicatures*. For example, inferring that "I ate some of the cookies" implicates the speaker ate some *but not all* (scalar implicatures); and "I ate the chocolate-chip cookies" where there are both chocolate chip cookies and raisin cookies in the context implicates that the speaker ate the chocolate chip, but *not both the chocolate chip and raisin cookies* (ad-hoc implicatures). Children’s ability to make scalar implicatures develops around age five, with ad-hoc implicatures emerging somewhat earlier. In the current work, using a time-sensitive tablet paradigm, we examined developmental gains in children’s ad-hoc implicature processing, and found evidence for successful pragmatic inferences by children as young as 3 years in a supportive context and substantial developmental gains in inference computation from 2 to 5 years. We also tested whether one cause of younger children (2-year-olds)'s consistent failure to make implicatures is their difficulty in inhibiting an alternative interpretation that is more salient than the target meaning (the *salience hypothesis*). Our findings supported this hypothesis: Younger children’s failures with implicatures were related to effects of the salience mismatch between possible interpretations. 
  
   
 keywords          : "Pragmatics; cognitive development; language processing; implicature; tablet"
@@ -34,10 +34,10 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 lineno            : yes
-mask              : yes
+mask              : no
 
 class             : "man"
-output            : papaja::apa6_word
+output            : papaja::apa6_pdf
 ---
 
 ```{r load_packages, include = FALSE}
@@ -47,6 +47,8 @@ library(here)
 library(ggthemes)
 library(brms)
 library(lme4)
+library(corrr)
+library(psych)
 ```
 
 ```{r global_options, include=FALSE}
@@ -63,20 +65,25 @@ set.seed(42)
 d_sample1_raw <- read.csv(here("data_ana/data","sample1.csv")) %>%
   mutate(sample = "original")
 
+list_info <- read.csv(here("data_ana/data","list_info.csv")) %>%
+  distinct(subid, .keep_all=T)
+
 order <- read.csv(here("data_ana/data","trial_info.csv"))
 
-d_sample1_raw <- left_join(d_sample1_raw, order)
+d_sample1_raw <- left_join(d_sample1_raw, list_info) %>%
+  left_join(., order)
 
+d_sample1_raw2 <- left_join(d_sample1_raw, order) 
 
 # filter by external criteria
-d_sample1_external <- d_sample1_raw %>%
+d_sample1_external <- d_sample1_raw2 %>%
   filter(trial_type != "practice",
          age_group != "1",
          age_group != "6",
          english > 3)
 
 # filter by internal (data) criteria
-d_sample1_internalDrop <- d_sample1_raw %>%
+d_sample1_internalDrop <- d_sample1_raw2 %>%
     group_by(subid) %>%
     summarise(nrow=n()) %>%
     filter(nrow < 10) %>%
@@ -103,7 +110,8 @@ order <- read.csv(here("data_ana/data","trial_info.csv"))
 
 ```{r clean}
 d_sample2_raw <- left_join(d_sample2_raw, order) %>%
-  left_join(., log) 
+  left_join(., log) %>%
+  distinct(subid, trial_num, .keep_all=T)
 
 d_sample2_external <- d_sample2_raw %>%
   filter(keep_drop == "keep",
@@ -162,7 +170,8 @@ rt_filter <- d %>%
 
 d <- d %>%
   filter(log(rt) < top_bound, 
-         log(rt) > bottom_bound)
+         log(rt) > bottom_bound) %>%
+  mutate(subid = factor(subid))
 
 write_csv(d, path = here("data_ana/data","final_analyzed_data.csv"))
 ```
@@ -195,6 +204,8 @@ This analysis -- though influential -- is in fact just one proposal among many, 
 Our goal here is not to distinguish between these different formalisms; instead, we are interested in understanding the processing of implicature in childhood. Despite that, it is useful to review the probabilistic view as it helps guide some of our predictions below. We consider sentence (2), following the analysis given in @goodman2016. Under the rational speech act (RSA) model, there is a space of meanings (e.g., ATE(chocolate chip & raisin), ATE(chocolate chip), etc.), each of which may have some prior probability of being correct. There is also a space of utterances (e.g., "I ate the chocolate chip cookies," "I ate the cookies"), each of which is either literally consistent or inconsistent with each meaning. Given a particular utterance, a listener can reason probabilistically about the speaker's intended meaning in making this utterance. He can do this by considering that the speaker is a Bayesian agent who chose the appropriate utterance for her intended meaning. He reasons about the speaker making her own choice by considering a listener who is also a Bayesian agent reasoning in this same way. This definition is endlessly recursive, however. In practice, the recursion can be grounded by a speaker considering a "literal listener," who interprets utterances according to their literal truth value [for further formal details, see @goodman2016]. 
 
 In the specific case of (2), the listener's reasoning can be glossed as "if the speaker had wanted to say she ate 'all of the cookies', she could have said just 'cookies'; but she didn't, she said something more specific: 'chocolate chip'; thus she probably intended me to recover the meaning ATE(chocolate chip)." Notice that this reasoning, when explained verbally, actually approximates the standard Gricean logic (though with some differences). Of course, one benefit of the RSA formalism is that probabilities can be put to each of these inferences and so the strength of the interpretive judgment can be predicted [@frank2012]. 
+On the other hand, the RSA-style reasoning does differ from some other implicature accounts that stress the intentionality of the speaker to convey a stronger meaning through the expression of a weaker meaning [e.g., @bach1999]. 
+While there are disagreements about whether implicatures have a privileged status over other kinds of rational inferences, different theoretical stances can have varying implications for interpretations of developmental trends (see Discussion).
  
 
 ## The Development of Pragmatic Implicature
@@ -280,9 +291,10 @@ apa_table(d_table1, caption = "Demographic information of participants in the or
 
 ## Participants
 
-In the original sample, either parents and their children visiting Children's Discovery Museum (San Jose, CA), or children in a local nursery school were invited to participate in a tablet study, and a total of 123 children were recruited. Participants were excluded from the sample for the following reasons: age other than 2 to 5 years (*n* = 3); parent-reported English exposure less than our prespecified criterion of 75% (*n* = 5); parental interference (*n* = 2); and noncompliance or difficulty with the experimental procedure (*n* = 9). After excluding participants who completed fewer than the prespecified number of 10 trials (*n* = 2), the final sample consisted of 102 children (see Table \@ref(tab:participantsummarytab)). 
+In the original sample, either parents and their children visiting Children's Discovery Museum (San Jose, CA), or children in a local nursery school were invited to participate in a tablet study, and a total of 120 children were recruited. Participants were excluded from the sample for the following reasons: age other than 2 to 5 years (*n* = 3); parent-reported English exposure less than our prespecified criterion of 75% (*n* = 5); parental interference (*n* = 2); and noncompliance or difficulty with the experimental procedure (*n* = 9). After excluding participants who completed fewer than the prespecified number of 10 trials (*n* = 2), the final sample consisted of 99 children (see Table \@ref(tab:participantsummarytab)). 
 
 In the replication sample, a total of 116 children were recruited, all at Children's Discovery Museum in San Jose. Reasons for exclusions were: age other than 2 to 4 years (*n* = 11); parent-reported English exposure less than our prespecified criterion of 75% (*n* = 15); parental interference (*n* = 3); noncompliance or difficulty with the experimental procedure (*n* = 3); and technical error (*n* = 4). The final sample consisted of 80 children (no participant was excluded for completing fewer than 10 trials). 
+It should be noted that we deviated from our preregistered sample since we did not recruit 5-year-olds, as we saw 4-year-olds already performing at ceiling and thus considered 4-year-olds to suffice as the oldest group. 
 
 ## Stimuli and Design
 
@@ -313,7 +325,7 @@ We used `r cite_r("simpimp.bib")` for all our analyses.
 
 We were interested in children’s processing of implicatures in comparison to unambiguous utterances, and developmental gains across ages. We used two different measures: (1) accuracy and (2) reaction time for choosing the correct referent. For each measure, we asked: (a) do children show developmental gains in selection of the target referent? And (b) does children’s performance vary depending on salience contrast? That is, when there are a relatively greater number of features on the distractor, do children have more difficulty and are they slower in choosing the correct referent? 
 
-As per our standard operating procedures, we removed trials in which the log of reaction time was more than 3 standard deviations above or below the mean (upper bound: `r exp(top_bound)/1000` seconds; lower bound: `r exp(bottom_bound)/1000` second; percentage of data excluded: `r rt_filter$prop_fail` %). Throughout this section, we used Bayesian linear mixed-effects models [`brms` package in R; @R-brms] using crossed random effects of participant, item, and sample (original vs. replication) with the maximal random effects structure supported by the design [@gelman2006data; @barr2013random]. Age is plotted in year bins, but was analyzed as a continuous variable, scaled and centered, in our statistical model. 
+As per our standard operating procedures, we removed trials in which the log of reaction time was more than 3 standard deviations above or below the mean (upper bound: `r exp(top_bound)/1000` seconds; lower bound: `r exp(bottom_bound)/1000` second; percentage of data excluded: `r rt_filter$prop_fail` %). Throughout this section, we used Bayesian linear mixed-effects models [`brms` package in R; @R-brms] using crossed random effects of participant and item with the maximal random effects structure supported by the design [@gelman2006data; @barr2013random]. Age is plotted in year bins, but was analyzed as a continuous variable, scaled and centered, in our statistical model. 
 
 ```{r accuracy, fig.cap="Proportion of 2- to 5-year-old children selecting the target in the original and replication samples (rows) in different trial types (columns). Data are binned into 6-month age groups for visualization purposes (all analyses are conducted on continuous data). Lines are loess smoothing functions. Solid lines represent trials in which there were fewer features present (2-vs-1 for control-double and implicature, 1-vs-1 for control-single) and dashed lines represent trials with more features (3-vs-1 for control-double and implicature, 2-vs-2 for control-single). Error bars are 95% confidence intervals, and are placed at the mean of the age bin and offset slightly to avoid overplotting. Dotted line represents a conservative chance level at 50\\%."}
 d_acc_ms <- d %>%
@@ -388,8 +400,68 @@ ttest.acc.2y.more.sample2 = t.test(filter(ms, age_group == "2" & trial_type == "
 
 ## Accuracy
 
+```{r brmacc_sample1, echo = F, results = 'asis'}
+load(here("data_ana", "simpimp_brms_acc_sample1.Rds"))
+
+acc.tab.sample1 <- as.data.frame(summary(brms_acc_orig)$fixed) %>%
+  select(Estimate, Est.Error, 'l-95% CI', 'u-95% CI') %>%
+  rename(Mean = Estimate,
+         "SD" = Est.Error,
+         "95% CI-Lower" = 'l-95% CI',
+         "95% CI-Upper" = 'u-95% CI'
+         )
+
+acc.tab.sample1$Predictor <- c("Intercept",
+                      "Age",
+                      "Control-double",
+                      "Implicature",
+                      "More features",
+                      "Control-double * Age",
+                      "Implicature * Age",
+                      "More features * Age",
+                      "Control-double * More features",
+                      "Implicature * More features",
+                      "Control-double * Age * More features",
+                      "Implicature * Age * More features"
+                      )
+rownames(acc.tab.sample1) <- NULL
+acc.tab.sample1 <- acc.tab.sample1[,c(5,1:4)]
+
+apa_table(acc.tab.sample1, caption= "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting accurate selection of target for the original sample.")
+```
+
+```{r brmacc_sample2, echo = F, results = 'asis'}
+load(here("data_ana", "simpimp_brms_acc_sample2.Rds"))
+
+acc.tab.sample2 <- as.data.frame(summary(brms_acc_rep)$fixed) %>%
+  select(Estimate, Est.Error, 'l-95% CI', 'u-95% CI') %>%
+  rename(Mean = Estimate,
+         "SD" = Est.Error,
+         "95% CI-Lower" = 'l-95% CI',
+         "95% CI-Upper" = 'u-95% CI'
+         )
+
+acc.tab.sample2$Predictor <- c("Intercept",
+                      "Age",
+                      "Control-double",
+                      "Implicature",
+                      "More features",
+                      "Control-double * Age",
+                      "Implicature * Age",
+                      "More features * Age",
+                      "Control-double * More features",
+                      "Implicature * More features",
+                      "Control-double * Age * More features",
+                      "Implicature * Age * More features"
+                      )
+rownames(acc.tab.sample2) <- NULL
+acc.tab.sample2 <- acc.tab.sample2[,c(5,1:4)]
+
+apa_table(acc.tab.sample2, caption= "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting accurate selection of target for the replication sample.")
+```
+
 ```{r brmacc, echo = F, results = 'asis'}
-load(here("data_ana", "simpimp_brms_acc.Rds"))
+load(here("data_ana", "simpimp_brms_acc_both_sample.Rds"))
 
 acc.tab <- as.data.frame(summary(brms_acc)$fixed) %>%
   select(Estimate, Est.Error, 'l-95% CI', 'u-95% CI') %>%
@@ -400,6 +472,7 @@ acc.tab <- as.data.frame(summary(brms_acc)$fixed) %>%
          )
 
 acc.tab$Predictor <- c("Intercept",
+                       "Sample",
                       "Age",
                       "Control-double",
                       "Implicature",
@@ -420,7 +493,10 @@ apa_table(acc.tab, caption= "Predictor mean estimates with standard deviation an
 
 The analysis of the accuracy rate (Figure \@ref(fig:accuracy)) showed that children across all ages were able to identify the target in control trials, indicating that, as expected, they can readily compute unambiguous meanings. In implicature trials, 4- and 5-year-olds’ performances were nearly at ceiling, replicating the previous results [@stiller2015; @horowitz2018]. In our paradigm, even 3-year-olds chose the inferential target above chance^[Because our task is a two-alternative forced choice, we define chance to be 50% across all trials. This baseline is a standard comparison that reflects the possibility that a child was completely inattentive to the task and chose completely at random. This baseline is more conservative than a salience-based baseline, which would likely suggest that the correct (inferentially-consistent) target would be chosen less than 50% of the time (e.g., the "mumble" condition in Stiller et al., 2015).] (original sample: $t$(`r ttest.acc.3y.sample1$parameter`) = `r round(ttest.acc.3y.sample1$statistic, 2)`, $p$ < 0.001; replication sample: $t$(`r ttest.acc.3y.sample2$parameter`) = `r round(ttest.acc.3y.sample2$statistic, 2)`, $p$ < 0.001). On the other hand, 2-year-olds’ performance in implicature trials did not differ from chance overall, but their performance varied depending on the number of features present. In 3-vs-1 trials (i.e., with a relatively greater number of features on the distractor), 2-year-olds did not choose the correct target referent, and even tended to choose the distractor somewhat more often numerically (original sample: $t$(`r ttest.acc.2y.more.sample1$parameter`) = `r round(ttest.acc.2y.more.sample1$statistic, 2)`, $p$ = `r round(ttest.acc.2y.more.sample1$p.value, 3)`; replication sample: $t$(`r ttest.acc.2y.more.sample2$parameter`) = `r round(ttest.acc.2y.more.sample2$statistic, 2)`, $p$ = `r round(ttest.acc.2y.more.sample2$p.value, 3)`). However, In 2-vs-1 trials (with fewer features on the distractor), 2-year-olds tended to choose the target more often than the distractor. This difference was numerically present in both samples and statistically significant in one (original sample: $t$(`r ttest.acc.2y.fewer.sample1$parameter`) = `r round(ttest.acc.2y.fewer.sample1$statistic, 2)`, $p$ = `r round(ttest.acc.2y.fewer.sample1$p.value, 3)`; replication sample: $t$(`r ttest.acc.2y.fewer.sample2$parameter`) = `r round(ttest.acc.2y.fewer.sample2$statistic, 2)`, $p$ = `r round(ttest.acc.2y.fewer.sample2$p.value, 3)`). By 4 years, this difference in accuracy rate between 2-vs-1 and 3-vs-1 trials was not present.
 
-A Bayesian linear mixed-effects model predicting accuracy based on age, trial type and number of features (salience contrast; more-feature vs. fewer-feature) showed a three-way positive interaction of age, implicature trials, and number of features (Table \@ref(tab:brmacc)). Unlike control trials, in which children’s performances did not differ by salience contrast, implicature trials showed lower accuracy in 3-vs-1 than 2-vs-1 trials in younger children, but not in older children. Thus, this result supports our hypothesis that the salience contrast between conditions led to greater difficulty with the implicature task for for younger children. 
+Bayesian linear mixed models predicting accuracy based on age, trial type and number of features (salience contrast; more-feature vs. fewer-feature) were conducted separately on the original sample and replication sample (Table \@ref(tab:brmacc_sample1) and Table \@ref(tab:brmacc_sample2)). Both models showed a main effect of age and a main effect of implicature trials, which indicated that children performed more poorly on implicature trials than control trials, while their overall performance on all trial types improved with age. 
+In addition, the model for the replication sample showed a two-way negative interaction between age and implicature trials, which suggested that improvement with age for implicature trials was lower compared to control trials for the replication sample. 
+
+We ran an exploratory Bayesian linear mixed-effects model on combined datasets from the original and replication sample, predicting accuracy based on age, trial type and number of features, which showed a three-way positive interaction of age, implicature trials, and number of features (Table \@ref(tab:brmacc)). Unlike control trials, in which children’s performances did not differ by salience contrast, implicature trials showed lower accuracy in 3-vs-1 than 2-vs-1 trials in younger children, but not in older children. Thus, this result supports our hypothesis that the salience contrast between conditions led to greater difficulty with the implicature task for for younger children. 
 
 ## Reaction time
 
@@ -472,8 +548,68 @@ ggplot(d_rt %>%
         legend.key = element_rect(colour = "transparent", fill = "white"))
 ```
 
+```{r brmrt_sample1, echo = F, results = 'asis'}
+load(here("data_ana", "simpimp_brms_rt_sample1.Rds"))
+
+rt.tab.sample1 <- as.data.frame(summary(brms_rt_sample1)$fixed) %>%
+  select(Estimate, Est.Error, 'l-95% CI', 'u-95% CI') %>%
+  rename(Mean = Estimate,
+         "SD" = Est.Error,
+         "95% CI-Lower" = 'l-95% CI',
+         "95% CI-Upper" = 'u-95% CI'
+         )
+
+rt.tab.sample1$Predictor <- c("Intercept",
+                      "Age",
+                      "Control-double",
+                      "Implicature",
+                      "More features",
+                      "Control-double * Age",
+                      "Implicature * Age",
+                      "More features * Age",
+                      "Control-double * More features",
+                      "Implicature * More features",
+                      "Control-double * Age * More features",
+                      "Implicature * Age * More features"
+                      )
+rownames(rt.tab.sample1) <- NULL
+rt.tab.sample1 <- rt.tab.sample1[,c(5,1:4)]
+
+apa_table(rt.tab.sample1, caption = "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting log reaction time to select the target for the original sample.")
+```
+
+```{r brmrt_sample2, echo = F, results = 'asis'}
+load(here("data_ana", "simpimp_brms_rt_sample2.Rds"))
+
+rt.tab.sample2 <- as.data.frame(summary(brms_rt_sample2)$fixed) %>%
+  select(Estimate, Est.Error, 'l-95% CI', 'u-95% CI') %>%
+  rename(Mean = Estimate,
+         "SD" = Est.Error,
+         "95% CI-Lower" = 'l-95% CI',
+         "95% CI-Upper" = 'u-95% CI'
+         )
+
+rt.tab.sample2$Predictor <- c("Intercept",
+                      "Age",
+                      "Control-double",
+                      "Implicature",
+                      "More features",
+                      "Control-double * Age",
+                      "Implicature * Age",
+                      "More features * Age",
+                      "Control-double * More features",
+                      "Implicature * More features",
+                      "Control-double * Age * More features",
+                      "Implicature * Age * More features"
+                      )
+rownames(rt.tab.sample2) <- NULL
+rt.tab.sample2 <- rt.tab.sample2[,c(5,1:4)]
+
+apa_table(rt.tab.sample2, caption = "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting log reaction time to select the target for the replication sample.")
+```
+
 ```{r brmrt, echo = F, results = 'asis'}
-load(here("data_ana", "simpimp_brms_rt_gaussian.Rds"))
+load(here("data_ana", "simpimp_brms_rt_both_sample.Rds"))
 
 rt.tab <- as.data.frame(summary(brms_rt)$fixed) %>%
   select(Estimate, Est.Error, 'l-95% CI', 'u-95% CI') %>%
@@ -484,6 +620,7 @@ rt.tab <- as.data.frame(summary(brms_rt)$fixed) %>%
          )
 
 rt.tab$Predictor <- c("Intercept",
+                      "Sample",
                       "Age",
                       "Control-double",
                       "Implicature",
@@ -502,11 +639,152 @@ rt.tab <- rt.tab[,c(5,1:4)]
 apa_table(rt.tab, caption = "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting log reaction time to select the target.")
 ```
 
-With increasing age, children computed both implicatures and unambiguous meanings and identified the target faster (Figure \@ref(fig:rt)). A Bayesian linear mixed-effects model predicting reaction time based on age, trial type and number of features present showed a positive two-way interaction between age and implicature trial (Table \@ref(tab:brmrt)), indicating that reaction time on implicature trials did not improve with age as much as the speed of processing unambiguous meanings. Together with the accuracy finding, this result suggests that though children become proficient at determining the *correct* target referents for ad-hoc implicatures by 5 years, implicature processing develops relatively more slowly. 
+With increasing age, children computed both implicatures and unambiguous meanings and identified the target faster (Figure \@ref(fig:rt)). Bayesian linear mixed-effects models predicting reaction time based on age, trial type and number of features were conducted separately in the original sample and replication sample, and showed a positive two-way interaction between age and implicature trial (Table \@ref(tab:brmrt_sample1) and Table \@ref(tab:brmrt_sample2)), indicating that reaction time on implicature trials did not improve with age as much as the speed of processing unambiguous meanings. This interaction was also shown in an exploratory Bayesian linear mixed-effects model on the combined datasets with both samples (Table \@ref(tab:brmrt)). Together with the accuracy finding, this result suggests that though children become proficient at determining the *correct* target referents for ad-hoc implicatures by 5 years, implicature processing develops relatively more slowly. 
 
-We also observed a positive two-way interaction between control-double trials and number of features, indicating that children took longer to identify the target in control-double trials with more features than in control-single trials with more features. 
+In two of the three models (the model on the replication sample only and the model on both datasets together), we also observed a positive two-way interaction between control-double trials and number of features, indicating that children took longer to identify the target in control-double trials with more features than in control-single trials with more features. 
 
 There was no interaction between inference trials and number of features, or between inference trial, age and number of features, however. Why would this be? We did not have a pre-specified hypothesis regarding this pattern of data, but we speculate that once a feature is named (e.g., Elmo’s lunchbox has an apple), it is relatively easier to find the feature in an inferential target image than in the distractor image. The target feature is by itself in the target referent, whereas it is grouped with with other features in the distractor. Thus, the inference trials may allow easy perceptual access to the target feature but also competition with the overall perceptual salience of the distractor. These factors might cancel one another out and lead to undifferentiated reaction times and hence the lack of reaction time interactions. The potential advantage of identifying a feature when it is by itself is only speculative, however, and should be examined further in future work.  
+
+```{r psych_alpha_fn}
+source(here("data_ana/compute_cronbach_alpha.R"))
+```
+
+```{r compute_alpha_acc, echo = F, results = 'asis'}
+# make data frame to compute alpha
+d_alpha <- d %>%
+  filter(trial_type != "inference") %>%
+  mutate(trial_num = as.numeric(as.character(trial_num)) - 2) %>%
+  select(subid, age_group, trial_num, correct) %>%
+  group_by(age_group, subid) %>%
+  arrange(subid, trial_num) %>%
+  mutate(trial_order = str_c("t",as.character(1:length(trial_num))),
+         n = length(trial_num)) %>%
+  select(-trial_num) %>%
+  spread(trial_order, correct) %>%
+  ungroup()
+  # select(-n, -subid, -age_group) %>%
+  # alpha(.) %>%
+  # summary(.)
+
+d_alpha_mean <- d_alpha %>%
+  group_by(age_group) %>%
+  summarise(n = mean(n)) %>%
+  mutate(age_group = as.factor(age_group))
+
+d_alpha_2y <- d_alpha %>%
+  filter(age_group == "2") %>%
+  select(-subid, -age_group, -n) %>%
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "2")
+
+d_alpha_3y <- d_alpha %>%
+  filter(age_group == "3") %>%
+ select(-subid, -age_group, -n, -t12) %>%
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "3")
+
+d_alpha_4y <- d_alpha %>%
+  filter(age_group == "4") %>%
+  select(-subid, -age_group, -n) %>%
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "4")
+
+d_alpha_5y <- d_alpha %>%
+  filter(age_group == "5") %>%
+  select(-subid, -age_group, -n) %>%
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "5")
+
+d_alpha_summary <- rbind(d_alpha_2y, d_alpha_3y, d_alpha_4y, d_alpha_5y) %>%
+  left_join(d_alpha_mean, .) %>%
+  rename(acc_raw_alpha = raw_alpha, acc_std_alpha = std.alpha)
+
+
+```
+
+```{r compute_alpha_rt, echo = F, results = 'asis'}
+# make data frame to compute alpha
+d_alpha_rt <- d %>%
+  filter(trial_type != "inference") %>%
+  mutate(trial_num = as.numeric(as.character(trial_num)) - 2) %>%
+  select(subid, age_group, trial_num, rt) %>%
+  group_by(age_group, subid) %>%
+  arrange(subid, trial_num) %>%
+  mutate(trial_order = str_c("t",as.character(1:length(trial_num))),
+         n = length(trial_num)) %>%
+  select(-trial_num) %>%
+  spread(trial_order, rt) %>%
+  ungroup()
+  # select(-n, -subid, -age_group) %>%
+  # alpha(.) %>%
+  # summary(.)
+
+d_alpha_mean_rt <- d_alpha_rt %>%
+  group_by(age_group) %>%
+  summarise(n = mean(n)) %>%
+  mutate(age_group = as.factor(age_group))
+
+d_alpha_rt_2y <- d_alpha_rt %>%
+  filter(age_group == "2") %>%
+  select(-subid, -age_group, -n) %>%
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "2")
+
+d_alpha_rt_3y <- d_alpha_rt %>%
+  filter(age_group == "3") %>%
+  select(-subid, -age_group, -n) %>% # dropped t12 because of missing values
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "3")
+
+d_alpha_rt_4y <- d_alpha_rt %>%
+  filter(age_group == "4") %>%
+  select(-subid, -age_group, -n) %>%
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "4")
+
+d_alpha_rt_5y <- d_alpha_rt %>%
+  filter(age_group == "5") %>%
+  select(-subid, -age_group, -n) %>%
+  alpha(.) %>%
+  summary(.) %>%
+  select(raw_alpha, std.alpha) %>%
+  mutate(age_group = "5")
+
+d_alpha_rt_summary <- rbind(d_alpha_rt_2y, d_alpha_rt_3y, d_alpha_rt_4y, d_alpha_rt_5y) %>%
+  left_join(d_alpha_mean_rt, .) %>%
+  rename(rt_raw_alpha = raw_alpha, rt_std_alpha = std.alpha)
+
+
+```
+
+```{r alpha_table, echo = F, results = 'asis'}
+d_alpha_all_summary <- left_join(d_alpha_summary, d_alpha_rt_summary)
+
+alpha.tab <- as.data.frame(d_alpha_all_summary) %>%
+  select(-acc_std_alpha, -rt_std_alpha) %>%
+  rename("Age bin" = age_group,
+         "M trials" = n,
+         "alpha acc" = acc_raw_alpha,
+         "alpha rt" = rt_raw_alpha
+         )
+
+apa_table(alpha.tab, caption = "Standardized reliability coefficients (Cronbach\'s alpha) for accuracy (Acc) and reaction time (RT) by age group, along with the mean number of trials for each")
+```
+
 
 # Discussion
 
@@ -516,7 +794,7 @@ We also investigated the salience hypothesis, namely that one cause of young chi
 
 In particular, although we observed numerical hints of a gain in accuracy for older children in one sample, we did not see a consistent facilitation effect due to our manipulation. We suspect this finding is due to a ceiling effect: Referent selection via ad-hoc implicature is relatively trivial for four-year-olds [see also @horowitz2018]. However, we saw a possible age-related advantage of pragmatic strengthening in the speed of computation: Whereas younger children tended to be slower in trials with a greater number of features for both unambiguous and inferential meanings, older children began to close the gap and become faster to compute implicatures given increased distractor saliency.
 
-Our findings here support the idea that salience-related competition plays a role in young children's difficulties with ad-hoc implicature. Our salience account is most manifest in the kind of simple referent selection tasks we used here. Despite this, following the general mapping of perceptual salience to prior probabilities in the RSA framework more broadly, we speculate that the account may apply more broadly to implicature computation beyond the scope of these tasks. Any pragmatic implicature requires an asymmetry in the "strength" of the alternatives. In ad-hoc referent-selection contexts, the stronger (more salient) alternative is the item with more features. In scalar implicatures, the implicature that you ate *some but not all of the cookies* is only possible because there is a stronger alternative ("all"). It remains an open empirical question whether the a salience mismatch account -- perhaps relabeled as a prior probability mismatch -- might explain some aspects of children’s difficulty with these other cases of implicatures as well. 
+Our findings here support the idea that salience-related competition plays a role in young children's difficulties with ad-hoc implicature. Our salience account is most manifest in the kind of simple referent selection tasks we used here. Despite this, following the general mapping of perceptual salience to prior probabilities in the RSA framework more broadly, we speculate that the account may apply more broadly to implicature computation beyond the scope of these tasks. Any pragmatic implicature requires an asymmetry in the "strength" of the alternatives. In ad-hoc referent-selection contexts, the stronger (more salient) alternative is the item with more features. In scalar implicatures, the implicature that you ate *some but not all of the cookies* is only possible because there is a stronger alternative ("all"). It remains an open empirical question whether the salience mismatch account -- perhaps relabeled as a prior probability mismatch -- might explain some aspects of children’s difficulty with these other cases of implicatures as well. 
 
 The salience hypothesis we tested here relates to broader methodological issues in experiments for young children with both visual and verbal alternative responses. One example of such a bias is the tendency of 2-year-olds to show a bias toward "yes" compared to "no" in answering questions. This bias disappears with age [@fritzley2003young], and there is some evidence that it is related to children's verbal ability and inhibitory control [@moriguchi2008young]. In general, as work on pragmatic inference begins to examine younger children's abilities, it is important to take into consideration a range of cognitive factors in task design. 
 
@@ -524,13 +802,17 @@ Following this line of reasoning, one further potential application of our accou
 
 Similarly, in classic "mutual exclusivity" paradigms [@markman1988children], by around 18 months, participants succeed in mapping a novel label to a novel object [@halberda2003development]. While the mechanisms underlying this empirical phenomenon are complex, it is well-established that the salience of the novel target is an important factor in children’s success [see @markman2003use for discussion]. Overall, evidence for children’s pragmatic word learning emerges earlier than implicature computation: Children succeed in these tasks substantially at earlier ages than even in our simplified implicature paradigm. We might speculate that one reason for this asymmetry is because implicature tasks require selecting the *less* salient alternative while word learning tasks typically ask participants to select a *more* salient alternative. 
 
-Our findings help in the construction of a comprehensive developmental account of processing of implicatures, and pragmatic inferences in general. In the samples that have been studied in this literature, by 2 years of age, children begin to be aware that informativeness is important to communication.  By 3 to 4 years, the ability to inhibit these salient targets is more developed, and they start to compute ad-hoc implicatures when relevant alternatives to the speaker’s words are provided in context. Scalar implicature performance develops more slowly, however, as children's ability to access the relevant inferential alternatives is only beginning to emerge in the period from 4 top 6 [@barner2011;@skordos2016;@horowitz2018]; their performance during these ages is highly variable and dependent on the nature of the context and its pragmatic demands [@papafragou2004]. 
+Our findings help in the construction of a comprehensive developmental account of processing of implicatures, and pragmatic inferences in general. In the samples that have been studied in this literature, by 2 years of age, children begin to be aware that informativeness is important to communication.  By 3 to 4 years, the ability to inhibit these salient targets is more developed, and they start to compute ad-hoc implicatures when relevant alternatives to the speaker’s words are provided in context. Scalar implicature performance develops more slowly, however, as children's ability to access the relevant inferential alternatives is only beginning to emerge in the period from 4 to 6 [@barner2011;@skordos2016;@horowitz2018]; their performance during these ages is highly variable and dependent on the nature of the context and its pragmatic demands [@papafragou2004]. 
 
-As illlustrated by this timeline, the salience hypothesis we tested is not mutually exclusive with other accounts of children's difficulties in implicature. For example, the "alternatives hypothesis" [@barner2011] is independently supported by a variety of experiments [@horowitz2018;@skordos2016]. Indeed, both the salience and alternatives hypotheses are likely true and likely contribute to children’s difficulty with implicatures to different degrees in different tasks and at different ages. 
+As illustrated by this timeline, the salience hypothesis we tested is not mutually exclusive with other accounts of children's difficulties in implicature. For example, the "alternatives hypothesis" [@barner2011] is independently supported by a variety of experiments [@horowitz2018;@skordos2016]. Indeed, both the salience and alternatives hypotheses are likely true and likely contribute to children’s difficulty with implicatures to different degrees in different tasks and at different ages. 
 
 One important challenge for this viewpoint is the nature of the ability that children use to overcome the pull of the salient alternative. One possible naive mapping for the ability would be to the broader construct of executive function, which undergoes substantial developmental changes during this period [@davidson2006; @diamond1996]. But executive function is a multi-faceted construct [@miyake2000unity], and the particular components that would be expected to predict visual (and perhaps conceptual) disengagement with a particular referent is unclear. Our own studies attempting to probe individual difference correlations between executive function and implicature ability in development have not been successful [e.g., @horowitz2018;@nordmeyer2016]. Thus, a target for future work is to better characterize the particular cognitive changes that relate to the developmental effects we have observed here. 
 
-There are several further limitations of our work here. First, our salience manipulation involved manipulation of the number of features present on an item, which might have caused a potential confound between salience and processing time. For example, children’s greater looking to the distractor (and thus greater processing time) might have been caused by a real desire to acquire more information, rather than the mere perceptual salience of the distractors. Second, as noted in the Introduction, our study does not differentiate between different theoretical proposals about how pragmatic inference is being computed in the current task. However, we believe that we are addressing  development of implicatures in general. Third, as with nearly all work in the literature on implicature processing, we address the performance of only relatively high socioeconomic status children in a Western context. In our ongoing work we address the generalizability of our task to other developmental contexts [@fortierunderrev]. 
+There are several further limitations of our work here. First, our salience manipulation involved manipulation of the number of features present on an item, which might have caused a potential confound between salience and processing time. For example, children’s greater looking to the distractor (and thus greater processing time) might have been caused by a real desire to acquire more information, rather than the mere perceptual salience of the distractors. 
+Second, as noted in the Introduction, our study does not differentiate between different theoretical proposals about how pragmatic inference is being computed in the current task. 
+However, we believe that we are addressing development of implicatures in general,
+with a caveat that our definition of implicatures does pertain to broader inferential reasoning between speakers and listeners, rather than having a special status or mechanism as assumed under particular formalisms.
+Third, as with nearly all work in the literature on implicature processing, we address the performance of only relatively high socioeconomic status children in a Western context. In our ongoing work we address the generalizability of our task to other developmental contexts [@fortierunderrev]. 
 
 In sum, our work shows evidence that from at least 3 years, children are able to compute ad-hoc implicatures, and that younger children's failures with implicatures on an referent-choosing task are confounded by the salience mismatch between possible referents. This pattern is consistent with a broader generalization, namely that tasks that have typically been used to look at children’s implicature processing have a variety of extraneous processing demands, which may explain why it has been difficult to see children’s underlying pragmatic abilities in such paradigms. Thus, our work demonstrates the importance of using a range of methods to measure children’s pragmatic processing.
 
