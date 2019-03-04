@@ -17,7 +17,7 @@ affiliation:
 
 author_note: |
       We would like to acknowledge Asher Kaye, Stephanie Hsiang, and Jacqueline Quirke for their assistance in data collection, and thank the staff and families at Children's Discovery Museum of San Jose and Bing Nursery School.
-      All data, analysis code, and experiment files and links are available at https://github.com/ejyoon/simpimp_rs.
+      All data, analysis code, and experiment files and links and their  preregistration are available at https://github.com/ejyoon/simpimp_rs. 
       This work was supported by a Postgraduate Doctoral Fellowship provided to EJY by Natural Sciences and Engineering Research Council of Canada, NSF #1456077, and Jacobs Advanced Research Fellowship to MCF.
       
 abstract: |
@@ -647,11 +647,7 @@ There was no interaction between inference trials and number of features, or bet
 
 ## Reliability 
 
-```{r psych_alpha_fn}
-source(here("data_ana/compute_cronbach_alpha.R"))
-```
-
-```{r compute_alpha_acc, echo = F, results = 'asis'}
+```{r compute_alpha_acc, echo = F, results='hide'}
 # make data frame to compute alpha
 d_alpha <- d %>%
   filter(trial_type != "inference") %>%
@@ -712,7 +708,7 @@ d_alpha_summary <- rbind(d_alpha_2y, d_alpha_3y, d_alpha_4y, d_alpha_5y) %>%
 
 ```
 
-```{r compute_alpha_rt, echo = F, results = 'asis'}
+```{r compute_alpha_rt, echo = F, results='hide'}
 # make data frame to compute alpha
 d_alpha_rt <- d %>%
   filter(trial_type != "inference") %>%
@@ -781,7 +777,7 @@ alpha.tab <- as.data.frame(d_alpha_all_summary) %>%
 
 colnames(alpha.tab) <- c("Age bin", "$M$ trials", "$\\alpha_{acc}$", "$\\alpha_{rt}$")
 
-apa_table(alpha.tab, escape=FALSE, caption = "Standardized reliability coefficients (Cronbach\'s $\\alpha$) for accuracy (acc) and reaction time (RT) by age group, along with the mean number of trials for each")
+apa_table(alpha.tab, escape=FALSE, caption = "Standardized reliability coefficients (Cronbach\'s $\\alpha$) for accuracy (acc) and reaction time (RT) by age group, along with the mean number of trials for each.")
 ```
 
 As specified in our preregistered protocol, we measured Cronbach’s alpha, a statistic that determines the internal consistency of experimental items [@santos1999cronbach]. We selected the 12 control trials and computed a reliability coefficient for each age group, for both RTs and accuracies. Reliabilities are shown in \@ref(tab:alphaTable). Reliabilities were generally reasonable, even though the reliabilities were lower for 4- and 5-year-olds who performed at ceiling and thus made few errors that distinguished between individuals [replicating results from @frank2016].
