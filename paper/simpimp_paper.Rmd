@@ -775,14 +775,11 @@ d_alpha_rt_summary <- rbind(d_alpha_rt_2y, d_alpha_rt_3y, d_alpha_rt_4y, d_alpha
 d_alpha_all_summary <- left_join(d_alpha_summary, d_alpha_rt_summary)
 
 alpha.tab <- as.data.frame(d_alpha_all_summary) %>%
-  select(-acc_std_alpha, -rt_std_alpha) %>%
-  rename("Age bin" = age_group,
-         "M trials" = n,
-         "alpha acc" = acc_raw_alpha,
-         "alpha rt" = rt_raw_alpha
-         )
+  select(-acc_std_alpha, -rt_std_alpha)
 
-apa_table(alpha.tab, caption = "Standardized reliability coefficients (Cronbach\'s alpha) for accuracy (Acc) and reaction time (RT) by age group, along with the mean number of trials for each")
+colnames(alpha.tab) <- c("Age bin", "$M$ trials", "$\\alpha_{acc}$", "$\\alpha_{rt}$")
+
+apa_table(alpha.tab, escape=FALSE, caption = "Standardized reliability coefficients (Cronbach\'s $\\alpha$) for accuracy (acc) and reaction time (RT) by age group, along with the mean number of trials for each")
 ```
 
 
