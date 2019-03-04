@@ -1,7 +1,7 @@
 ---
-title: "simpimp_rep"
+title: "simpimp brms ana"
 author: "Erica Yoon"
-date: "3/7/2018"
+date: "2/20/2019"
 output: html_document
 ---
 
@@ -13,522 +13,40 @@ library(here)
 library(ggthemes)
 library(brms)
 library(lme4)
-```
 
-load data for sample #1 and clean.
-
-```{r load}
-d_sample1_raw <- read.csv(here("data_ana/data","simpimp_ipad_short.csv")) %>%
-  mutate(sample = "original")
-
-order <- read.csv(here("data_ana/data","simpimpSC-itemNumInfo.csv"))
-
-d_sample1_raw <- left_join(d_sample1_raw, order)
-
-
-# filter by external criteria
-d_sample1_external <- d_sample1_raw %>%
-  filter(trial_type != "practice",
-         age_group != "1",
-         age_group != "6",
-         english > 3)
-
-# filter by internal (data) criteria
-d_sample1_internalDrop <- d_sample1_raw %>%
-    group_by(subid) %>%
-    summarise(nrow=n()) %>%
-    filter(nrow < 10) %>%
-    droplevels()
-
-d_sample1_final <- d_sample1_external %>%
-  filter(!subid %in% d_sample1_internalDrop$subid) %>%
-  droplevels()
-```
-
-load data for sample #2.
-
-```{r sample2}
-d_sample2_raw <- read.csv(here("data_ana/data","simpimpSCresults.csv")) %>%
-  mutate(sample = "replication",
-         site = "cdm")
-
-log <- read.csv(here("data_ana/data","simpimp-subject_log.csv")) %>%
-  mutate(English = as.numeric(as.character(fct_recode(English,
-                              "10" = "five-ten",
-                              "95" = "90-95")))) %>%
-  rename(english = English)
-
-order <- read.csv(here("data_ana/data","simpimpSC-itemNumInfo.csv"))
-```
-
-join and clean.
-
-```{r clean}
-d_sample2_raw <- left_join(d_sample2_raw, order) %>%
-  left_join(., log) 
-
-d_sample2_external <- d_sample2_raw %>%
-  filter(keep_drop == "keep",
-         !is.na(keep_drop),
-         consent == "Y",
-         as.numeric(as.character(english)) > 70,
-         age_group %in% c("2", "3", "4")) %>%
-  filter(trial_type != "practice")
-
-d_sample2_internalDrop <- d_sample2_raw %>%
-    group_by(subid) %>%
-    summarise(nrow=n()) %>%
-    filter(nrow < 10) %>%
-    droplevels()
-
-d_sample2_final <- d_sample2_external %>%
-  filter(!subid %in% d_sample2_internalDrop$subid) %>%
-  droplevels()
-
-# check counterbalancing
-d_sample2_final %>%
-  group_by(age_group, list, subid) %>%
-  summarise(number = n()) %>%
-  group_by(age_group, list) %>%
-  summarise(number = n())
-```
-
-show participant numbers to be reported.
-
-```{r numbers}
-# total recruited
-rbind(d_sample1_raw %>% select(sample, subid, age_group),
-      d_sample2_raw %>% select(sample, subid, age_group)) %>%
-  group_by(sample, subid, age_group) %>%
-  summarise(nrow=n()) %>%
-  group_by(sample, age_group) %>%
-  filter(age_group %in% c("2", "3", "4", "5")) %>%
-  summarise(nrow=n())
-
-# after filtering by external criteria
-rbind(d_sample1_external %>% select(sample, subid, age_group),
-      d_sample2_external %>% select(sample, subid, age_group)) %>%
-  group_by(sample, subid, age_group) %>%
-  summarise(nrow=n()) %>%
-  group_by(sample, age_group) %>%
-  summarise(nrow=n())
-
-# after filtering by internal criteria
-rbind(d_sample1_final %>% select(sample, subid, age_group),
-      d_sample2_final %>% select(sample, subid, age_group)) %>%
-  group_by(sample, subid, age_group) %>%
-  summarise(nrow=n()) %>%
-  group_by(sample, age_group) %>%
-  summarise(nrow=n())
-```
-
-
-```{r}
-d <- rbind(d_sample1_final,
-           d_sample2_final %>%
-             select(colnames(d_sample1_final))) %>%
-  select(-english) %>%
-  mutate(correct = as.numeric(as.character(fct_recode(correct,
-                                                      "0" = "N",
-                                                      "1" = "Y")))) %>%
-  mutate(item_rel = case_when(
-    item_num == "1vs1" | item_num == "2vs1" ~ "fewer",
-    item_num == "2vs2" | item_num == "3vs1" ~ "more"
-  )) %>%
-  mutate(age_group = as.numeric(as.character(age_group)))
-```
-
-remove outliers by rt.
-```{r outlier}
-top_bound <- mean(log(d$rt)) + 3*sd(log(d$rt))
-bottom_bound <- mean(log(d$rt)) - 3*sd(log(d$rt))
-
-d <- d %>%
-  filter(log(rt) < top_bound, 
-         log(rt) > bottom_bound)
-```
-
-# accuracy
-
-```{r ana_acc_sample12together}
-d_acc_ms0 <- d %>%
-  mutate(sample = as.factor(sample),
-         age_group_small = as.numeric(as.character(cut(age, seq(2,6,.5), 
-                                          labels = seq(2,5.5,.5)+.25)))) %>%
-  group_by(sample, age_group_small, trial_type, item_rel, subid) %>%
-  summarise(correct = mean(correct))
-
-
-d_acc0 <- d_acc_ms0 %>%
-  group_by(age_group_small, trial_type, item_rel) %>%
-  multi_boot_standard(col = "correct") %>%
-  mutate(correct = mean) %>%
-  select(-mean) %>%
-  ungroup() %>%
-  left_join(d_acc_ms0 %>%
-              group_by(age_group_small, trial_type, item_rel) %>%
-              summarise(n = n()))
-
-    
-
-ggplot(d_acc0 %>%
-         mutate(trial_type = fct_recode(trial_type,
-                                        "control-single" = "control_single",
-                                        "control-double" = "control_double")), 
-       aes(x = age_group_small, y = correct,
-           group = item_rel, col = item_rel)) + 
-  # geom_line() + 
-  geom_smooth(span= 1, aes(weight = n), se = FALSE) + 
-  # geom_point(aes(size = n), alpha = .5) +
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
-  facet_grid(. ~ trial_type) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  geom_hline(yintercept=.50,lty=4) +
-  ylab("Accuracy") +
-  xlab("Age (years)") +
-  ylim(c(0, 1)) +
-  theme_few() +
-  theme(text = element_text(size=14),
-        legend.position = "top") +
-  scale_color_solarized() +
-  guides(col=guide_legend(title="Number of features"),
-         size = guide_legend(title="Number of participants"))
-
-```
-
-
-```{r ana_acc_ageBinned}
-d_acc <- d %>%
-  group_by(sample, age_group, trial_type, item_rel, subid) %>%
-  summarise(correct = mean(correct)) %>%
-  group_by(sample, age_group, trial_type, item_rel) %>%
-  multi_boot_standard(col = "correct") %>%
-  mutate(correct = mean) %>%
-  select(-mean) %>%
-  ungroup() %>%
-  mutate(sample = as.factor(sample))
-
-p1 <- ggplot(d_acc, aes(x = age_group, y = correct, group = interaction(item_rel, sample), col = item_rel, linetype=sample)) + 
-  geom_line() + 
-  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper), 
-                  position = position_dodge(width = .1)) + 
-  facet_grid(. ~ trial_type) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  geom_hline(yintercept=.50,lty=4) +
-  ylab("Accuracy") +
-  xlab("Age (years)") +
-  ylim(c(0, 1)) +
-  theme(text = element_text(size=14)) +
-  theme_few() +
-  scale_color_solarized()
-
-p1
-```
-
-```{r ana_acc_ageNoBinned}
-d_acc2 <- d %>%
-  group_by(sample, trial_type, item_rel, age, subid) %>%
-  summarise(correct = mean(correct))
-
-p1_3 <- ggplot(d_acc2, aes(x = age, y = correct, 
-                           group = interaction(item_rel, sample), 
-                           col = item_rel, linetype = factor(sample))) + 
-  geom_jitter() + 
-  geom_smooth(span= 1.5, se=F) +
-  facet_grid(. ~ trial_type) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  geom_hline(yintercept=.50,lty=4) +
-  ylab("Accuracy") +
-  xlab("Age (years)") +
-  ylim(c(0, 1)) +
-  theme(text = element_text(size=14)) +
-  theme_few() +
-  scale_color_solarized()
-
-p1_3
-```
-
-```{r ana_acc_ageBinned2}
-d_acc_ms <- d %>%
-  mutate(sample = as.factor(sample),
-         age_group_small = as.numeric(as.character(cut(age, seq(2,6,.5), 
-                                          labels = seq(2,5.5,.5)+.25)))) %>%
-  group_by(sample, age_group_small, trial_type, item_rel, subid) %>%
-  summarise(correct = mean(correct))
-
-
-d_acc <- d_acc_ms %>%
-  group_by(sample, age_group_small, trial_type, item_rel) %>%
-  multi_boot_standard(col = "correct") %>%
-  mutate(correct = mean) %>%
-  select(-mean) %>%
-  ungroup() %>%
-  left_join(d_acc_ms %>%
-              group_by(sample, age_group_small, trial_type, item_rel) %>%
-              summarise(n = n()))
-
-    
-
-ggplot(d_acc %>%
-         mutate(trial_type = fct_recode(trial_type,
-                                        "control-single" = "control_single",
-                                        "control-double" = "control_double")), 
-       aes(x = age_group_small, y = correct,
-           group = item_rel, col = item_rel)) + 
-  # geom_line() + 
-  geom_smooth(span= 1, aes(weight = n), se = FALSE) + 
-  # geom_point(aes(size = n), alpha = .5) +
-  # geom_jitter(aes(data=d_acc2, x=age_group_small, y=correct), alpha=.4) +
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
-  facet_grid(sample ~ trial_type, labeller = labeller(sample = label_both)) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  geom_hline(yintercept=.50,lty=2) +
-  ylab("Accuracy") +
-  xlab("Age (years)") +
-  ylim(c(0, 1)) +
-  xlim(c(2, 5.8)) +
-  theme_few() +
-  theme(text = element_text(size=14),
-        legend.position = "bottom") +
-  scale_color_solarized() +
-  guides(col=guide_legend(title="Number of features"),
-         size = guide_legend(title="Number of participants"))
-
-
-ggplot(d_acc %>%
-         mutate(trial_type = fct_recode(trial_type,
-                                        "control-single" = "control_single",
-                                        "control-double" = "control_double")), 
-       aes(x = age_group_small, y = correct,
-           group = interaction(item_rel, sample), col = item_rel, linetype=sample)) + 
-  geom_smooth(span= 1, aes(weight = n), se = FALSE) + 
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
-  facet_grid(. ~ trial_type) +
-  geom_hline(yintercept=.50,lty=2) +
-  ylab("Accuracy") +
-  xlab("Age (years)") +
-  ylim(c(0, 1)) +
-  theme(text = element_text(size=14)) +
-  theme_few() +
-  scale_color_solarized() +
-  guides(col=guide_legend(title="Number of features"),
-         size = guide_legend(title="Number of participants"))
-```
-
-# rt
-
-```{r ana_rt_sample12together}
-d_rt_ms0 <- d %>%
-  mutate(sample = as.factor(sample),
-         age_group_small = as.numeric(as.character(cut(age, seq(2,6,.5), 
-                                          labels = seq(2,5.5,.5)+.25)))) %>%
-  group_by(sample, age_group_small, trial_type, item_rel, subid) %>%
-  summarise(rt = mean(rt))
-
-
-d_rt0 <- d_rt_ms0 %>%
-  group_by(age_group_small, trial_type, item_rel) %>%
-  multi_boot_standard(col = "rt") %>%
-  mutate(rt = mean) %>%
-  select(-mean) %>%
-  ungroup() %>%
-  left_join(d_acc_ms0 %>%
-              group_by(age_group_small, trial_type, item_rel) %>%
-              summarise(n = n()))
-
-    
-
-ggplot(d_rt0 %>%
-         mutate(trial_type = fct_recode(trial_type,
-                                        "control-single" = "control_single",
-                                        "control-double" = "control_double")), 
-       aes(x = age_group_small, y = rt,
-           group = item_rel, col = item_rel)) + 
-  # geom_line() + 
-  geom_smooth(span= 1, aes(weight = n), se = FALSE) + 
-  # geom_point(aes(size = n), alpha = .5) +
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
-  facet_grid(. ~ trial_type) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  ylab("Reaction time (s)") +
-  xlab("Age (years)") +
-  theme(text = element_text(size=14)) +
-  theme_few() +
-  scale_color_solarized() +
-  guides(col=guide_legend(title="Number of features"),
-         size = guide_legend(title="Number of participants"))
-
-```
-
-```{r ana_rt}
-d_rt <- d %>%
-  mutate(sample = as.factor(sample)) %>%
-  filter(correct == "1") %>%
-  group_by(sample, age_group, trial_type, item_rel, subid) %>%
-  summarise(rt = mean(rt)) %>%
-  group_by(sample, age_group, trial_type, item_rel) %>%
-  multi_boot_standard(col = "rt") %>%
-  mutate(rt = mean) %>%
-  select(-mean)
-
-p2 <- ggplot(d_rt, aes(x = age_group, y = rt, group = interaction(item_rel, sample), col = item_rel, linetype = sample)) + 
-  geom_line() + 
-  geom_pointrange(aes(ymin = ci_lower, ymax = ci_upper), 
-                  position = position_dodge(width = .1)) + 
-  facet_grid(. ~ trial_type) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  geom_hline(yintercept=.50,lty=4) +
-  ylab("rt") +
-  xlab("Age (years)") +
-  theme(legend.position="bottom",
-        text = element_text(size=14)) +
-  theme_few() +
-  scale_color_solarized()
-
-p2
-```
-
-```{r ana_rt2}
-d_rt_ms <- d %>%
-  mutate(sample = as.factor(sample),
-         age_group_small = as.numeric(as.character(cut(age, seq(2,6,.5), 
-                                          labels = seq(2,5.5,.5)+.25)))) %>%
-  group_by(sample, age_group_small, trial_type, item_rel, subid) %>%
-  summarise(rt = mean(rt))
-
-
-d_rt <- d_rt_ms %>%
-  group_by(sample, age_group_small, trial_type, item_rel) %>%
-  multi_boot_standard(col = "rt") %>%
-  mutate(rt = mean) %>%
-  select(-mean) %>%
-  ungroup() %>%
-  left_join(d_acc_ms %>%
-              group_by(sample, age_group_small, trial_type, item_rel) %>%
-              summarise(n = n()))
-
-    
-
-ggplot(d_rt %>%
-                  mutate(trial_type = fct_recode(trial_type,
-                                        "control-single" = "control_single",
-                                        "control-double" = "control_double")), 
- aes(x = age_group_small, y = rt, 
-                  group = item_rel, col = item_rel)) + 
-  # geom_line() + 
-  geom_smooth(span= 1, aes(weight = n), se = FALSE) + 
-  # geom_point(aes(size = n), alpha = .5) + 
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
-  facet_grid(sample ~ trial_type, labeller = labeller(sample = label_both)) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  ylab("Reaction time (s)") +
-  xlab("Age (years)") +
-  # scale_color_discrete(name="Number of features") +
-    # guides(col=guide_legend(title="Number of features")) +
-  theme_few() +
-  scale_color_solarized(name="Number of features") +
-  theme(text = element_text(size=14),
-        legend.position = "bottom")
-
-
-
-
-ggplot(d_rt %>%
-                  mutate(trial_type = fct_recode(trial_type,
-                                        "control-single" = "control_single",
-                                        "control-double" = "control_double")), 
-       aes(x = age_group_small, y = rt, 
-                  group = interaction(item_rel, sample), col = item_rel, linetype=sample)) + 
-  # geom_line() + 
-  geom_smooth(span= 1, aes(weight = n), se = FALSE) + 
-  # geom_point(aes(size = n), alpha = .5) + 
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-               position = position_dodge(width = .1)) + 
-  facet_grid(. ~ trial_type) +
-#   guides(colour=guide_legend(title="Number of features")) +
-  # guides(colour=FALSE) +
-  ylab("Reaction time (s)") +
-  xlab("Age (years)") +
-  theme(text = element_text(size=14)) +
-  theme_few() +
-  scale_color_solarized() +
-  guides(col=guide_legend(title="Number of features"),
-         size = guide_legend(title="Number of participants"))
-
-
-```
-
-# t-tests
-
-```{r ttest}
-ms <- d %>%
-  group_by(sample, age_group, trial_type, item_rel, subid) %>%
-  summarize(correct = mean(correct, na.rm=TRUE))
-
-ttest.acc.2y.sample1 = t.test(filter(ms, age_group == "2" & trial_type == "inference" & sample == "original")$correct, mu=.5)
-ttest.acc.2y.sample2 = t.test(filter(ms, age_group == "2" & trial_type == "inference" & sample == "replication")$correct, mu=.5)
-ttest.acc.3y.sample1 = t.test(filter(ms, age_group == "3" & trial_type == "inference" & sample == "original")$correct, mu=.5)
-ttest.acc.3y.sample2 = t.test(filter(ms, age_group == "3" & trial_type == "inference" & sample == "replication")$correct, mu=.5)
-ttest.acc.4y.sample1 = t.test(filter(ms, age_group == "4" & trial_type == "inference" & sample == "original")$correct, mu=.5)
-ttest.acc.4y.sample2 = t.test(filter(ms, age_group == "4" & trial_type == "inference" & sample == "replication")$correct, mu=.5)
-ttest.acc.5y.sample1 = t.test(filter(ms, age_group == "5" & trial_type == "inference" & sample == "original")$correct, mu=.5)
-```
-
-by number of features
-
-```{r ttest2}
-ttest.acc.2y.fewer.sample1 = t.test(filter(ms, age_group == "2" & trial_type == "inference" & item_rel == "fewer" & sample == "original")$correct, mu=.5)
-ttest.acc.2y.more.sample1 = t.test(filter(ms, age_group == "2" & trial_type == "inference" & item_rel == "more" & sample == "original")$correct, mu=.5)
-ttest.acc.2y.fewer.sample2 = t.test(filter(ms, age_group == "2" & trial_type == "inference" & item_rel == "fewer" & sample == "replication")$correct, mu=.5)
-ttest.acc.2y.more.sample2 = t.test(filter(ms, age_group == "2" & trial_type == "inference" & item_rel == "more" & sample == "replication")$correct, mu=.5)
-
-ttest.acc.2y.fewer.sample1
-ttest.acc.2y.more.sample1
-ttest.acc.2y.fewer.sample2
-ttest.acc.2y.more.sample2
-```
-
-# lmer
-
-```{r lmer_acc}
-lmer_acc <- glmer(data=d %>%
-                  mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
-                  mutate(age = scale(age)), 
-                correct ~ age * trial_type * item_rel + (1 | sample), family="binomial")
-
-summary(lmer_acc)
-```
-
-```{r lmer_rt}
-lmer_rt <- lmer(data=d %>%
-                  mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
-                  mutate(age = scale(age)), 
-                rt ~ age * trial_type * item_rel + (1|subid) + (1|item) + (1 | sample))
-
-summary(lmer_rt)
+d <- read.csv(here("data_ana/data","final_analyzed_data.csv"))
 ```
 
 # brms
 
 ```{r ana_brms_acc, eval=FALSE}
-# brms_acc <- brm(data=d %>%
-#                   mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
-#                   mutate(age = scale(age)),
-#                 correct ~ age * trial_type * item_rel + (trial_type + item_rel | subid) + (age + trial_type + item_rel | item) + (age + trial_type + item_rel | sample), family="bernoulli", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
-# 
-# summary(brms_acc)
+brms_acc <- brm(data=d %>%
+                  mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
+                  mutate(age = scale(age)),
+                correct ~ sample + age * trial_type * item_rel + (trial_type + item_rel | subid) + (trial_type + item_rel | item), family="bernoulli", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
+
+summary(brms_acc)
+save(brms_acc, file = here("data_ana", "simpimp_brms_acc_both_sample.Rds"))
+```
+
+```{r ana_brms_acc, eval=FALSE}
+brms_acc_orig <- brm(data=d %>%
+                  filter(sample == "original") %>%
+                  mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
+                  mutate(age = scale(age)),
+                correct ~ age * trial_type * item_rel + (trial_type + item_rel | subid) + (trial_type + item_rel | item), family="bernoulli", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
+
+summary(brms_acc_orig)
+save(brms_acc_orig, file = here("data_ana", "simpimp_brms_acc_sample1.Rds"))
+
+brms_acc_rep <- brm(data=d %>%
+                  filter(sample == "replication") %>%
+                  mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
+                  mutate(age = scale(age)),
+                correct ~ age * trial_type * item_rel + (trial_type + item_rel | subid) + (trial_type + item_rel | item), family="bernoulli", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
+
+summary(brms_acc_rep)
+save(brms_acc_rep, file = here("data_ana", "simpimp_brms_acc_sample2.Rds"))
 ```
 
 ```{r ana_brms_rt, eval=FALSE}
@@ -536,7 +54,34 @@ brms_rt <- brm(data=d %>%
                   mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
                  mutate(rt = log(rt),
                         age = scale(age)),
-                rt ~ age * trial_type * item_rel + (trial_type + item_rel | subid) + (age + trial_type + item_rel | item) + (age + trial_type + item_rel | sample), family="gaussian", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
+                rt ~ sample + age * trial_type * item_rel + (trial_type + item_rel | subid) + (trial_type + item_rel | item), family="gaussian", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
 
 summary(brms_rt)
+save(brms_rt, file = here("data_ana", "simpimp_brms_rt_both_sample.Rds"))
+
 ```
+
+
+```{r ana_brms_rt, eval=FALSE}
+brms_rt_sample1 <- brm(data=d %>%
+                  mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
+                  filter(sample == "original") %>%
+                 mutate(rt = log(rt),
+                        age = scale(age)),
+                rt ~ age * trial_type * item_rel + (trial_type + item_rel | subid) + (trial_type + item_rel | item), family="gaussian", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
+
+summary(brms_rt_sample1)
+save(brms_rt_sample1, file = here("data_ana", "simpimp_brms_rt_sample1.Rds"))
+
+brms_rt_sample2 <- brm(data=d %>%
+                  mutate(trial_type = relevel(trial_type, ref = "control_single")) %>%
+                  filter(sample == "replication") %>%
+                 mutate(rt = log(rt),
+                        age = scale(age)),
+                rt ~ age * trial_type * item_rel + (trial_type + item_rel | subid) + (trial_type + item_rel | item), family="gaussian", iter=3000, control = list(adapt_delta = 0.99, max_treedepth = 15))
+
+summary(brms_rt_sample2)
+save(brms_rt_sample2, file = here("data_ana", "simpimp_brms_rt_sample2.Rds"))
+
+```
+
