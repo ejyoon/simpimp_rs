@@ -400,7 +400,7 @@ ttest.acc.2y.more.sample2 = t.test(filter(ms, age_group == "2" & trial_type == "
 
 ## Accuracy
 
-```{r brmacc_sample1, echo = F, results = 'asis'}
+```{r brmaccSample1, echo = F, results = 'asis'}
 load(here("data_ana", "simpimp_brms_acc_sample1.Rds"))
 
 acc.tab.sample1 <- as.data.frame(summary(brms_acc_orig)$fixed) %>%
@@ -430,7 +430,7 @@ acc.tab.sample1 <- acc.tab.sample1[,c(5,1:4)]
 apa_table(acc.tab.sample1, caption= "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting accurate selection of target for the original sample.")
 ```
 
-```{r brmacc_sample2, echo = F, results = 'asis'}
+```{r brmaccSample2, echo = F, results = 'asis'}
 load(here("data_ana", "simpimp_brms_acc_sample2.Rds"))
 
 acc.tab.sample2 <- as.data.frame(summary(brms_acc_rep)$fixed) %>%
@@ -488,12 +488,12 @@ acc.tab$Predictor <- c("Intercept",
 rownames(acc.tab) <- NULL
 acc.tab <- acc.tab[,c(5,1:4)]
 
-apa_table(acc.tab, caption= "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting accurate selection of target.")
+apa_table(acc.tab, caption= "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting accurate selection of target in both the original and replication samples.")
 ```
 
 The analysis of the accuracy rate (Figure \@ref(fig:accuracy)) showed that children across all ages were able to identify the target in control trials, indicating that, as expected, they can readily compute unambiguous meanings. In implicature trials, 4- and 5-year-olds’ performances were nearly at ceiling, replicating the previous results [@stiller2015; @horowitz2018]. In our paradigm, even 3-year-olds chose the inferential target above chance^[Because our task is a two-alternative forced choice, we define chance to be 50% across all trials. This baseline is a standard comparison that reflects the possibility that a child was completely inattentive to the task and chose completely at random. This baseline is more conservative than a salience-based baseline, which would likely suggest that the correct (inferentially-consistent) target would be chosen less than 50% of the time (e.g., the "mumble" condition in Stiller et al., 2015).] (original sample: $t$(`r ttest.acc.3y.sample1$parameter`) = `r round(ttest.acc.3y.sample1$statistic, 2)`, $p$ < 0.001; replication sample: $t$(`r ttest.acc.3y.sample2$parameter`) = `r round(ttest.acc.3y.sample2$statistic, 2)`, $p$ < 0.001). On the other hand, 2-year-olds’ performance in implicature trials did not differ from chance overall, but their performance varied depending on the number of features present. In 3-vs-1 trials (i.e., with a relatively greater number of features on the distractor), 2-year-olds did not choose the correct target referent, and even tended to choose the distractor somewhat more often numerically (original sample: $t$(`r ttest.acc.2y.more.sample1$parameter`) = `r round(ttest.acc.2y.more.sample1$statistic, 2)`, $p$ = `r round(ttest.acc.2y.more.sample1$p.value, 3)`; replication sample: $t$(`r ttest.acc.2y.more.sample2$parameter`) = `r round(ttest.acc.2y.more.sample2$statistic, 2)`, $p$ = `r round(ttest.acc.2y.more.sample2$p.value, 3)`). However, In 2-vs-1 trials (with fewer features on the distractor), 2-year-olds tended to choose the target more often than the distractor. This difference was numerically present in both samples and statistically significant in one (original sample: $t$(`r ttest.acc.2y.fewer.sample1$parameter`) = `r round(ttest.acc.2y.fewer.sample1$statistic, 2)`, $p$ = `r round(ttest.acc.2y.fewer.sample1$p.value, 3)`; replication sample: $t$(`r ttest.acc.2y.fewer.sample2$parameter`) = `r round(ttest.acc.2y.fewer.sample2$statistic, 2)`, $p$ = `r round(ttest.acc.2y.fewer.sample2$p.value, 3)`). By 4 years, this difference in accuracy rate between 2-vs-1 and 3-vs-1 trials was not present.
 
-Bayesian linear mixed models predicting accuracy based on age, trial type and number of features (salience contrast; more-feature vs. fewer-feature) were conducted separately on the original sample and replication sample (Table \@ref(tab:brmacc_sample1) and Table \@ref(tab:brmacc_sample2)). Both models showed a main effect of age and a main effect of implicature trials, which indicated that children performed more poorly on implicature trials than control trials, while their overall performance on all trial types improved with age. 
+Bayesian linear mixed models predicting accuracy based on age, trial type and number of features (salience contrast; more-feature vs. fewer-feature) were conducted separately on the original sample and replication sample (Table \@ref(tab:brmaccSample1) and Table \@ref(tab:brmaccSample2)). Both models showed a main effect of age and a main effect of implicature trials, which indicated that children performed more poorly on implicature trials than control trials, while their overall performance on all trial types improved with age. 
 In addition, the model for the replication sample showed a two-way negative interaction between age and implicature trials, which suggested that improvement with age for implicature trials was lower compared to control trials for the replication sample. 
 
 We ran an exploratory Bayesian linear mixed-effects model on combined datasets from the original and replication sample, predicting accuracy based on age, trial type and number of features, which showed a three-way positive interaction of age, implicature trials, and number of features (Table \@ref(tab:brmacc)). Unlike control trials, in which children’s performances did not differ by salience contrast, implicature trials showed lower accuracy in 3-vs-1 than 2-vs-1 trials in younger children, but not in older children. Thus, this result supports our hypothesis that the salience contrast between conditions led to greater difficulty with the implicature task for for younger children. 
@@ -548,7 +548,7 @@ ggplot(d_rt %>%
         legend.key = element_rect(colour = "transparent", fill = "white"))
 ```
 
-```{r brmrt_sample1, echo = F, results = 'asis'}
+```{r brmrtSample1, echo = F, results = 'asis'}
 load(here("data_ana", "simpimp_brms_rt_sample1.Rds"))
 
 rt.tab.sample1 <- as.data.frame(summary(brms_rt_sample1)$fixed) %>%
@@ -578,7 +578,7 @@ rt.tab.sample1 <- rt.tab.sample1[,c(5,1:4)]
 apa_table(rt.tab.sample1, caption = "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting log reaction time to select the target for the original sample.")
 ```
 
-```{r brmrt_sample2, echo = F, results = 'asis'}
+```{r brmrtSample2, echo = F, results = 'asis'}
 load(here("data_ana", "simpimp_brms_rt_sample2.Rds"))
 
 rt.tab.sample2 <- as.data.frame(summary(brms_rt_sample2)$fixed) %>%
@@ -636,14 +636,16 @@ rt.tab$Predictor <- c("Intercept",
 rownames(rt.tab) <- NULL
 rt.tab <- rt.tab[,c(5,1:4)]
 
-apa_table(rt.tab, caption = "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting log reaction time to select the target.")
+apa_table(rt.tab, caption = "Predictor mean estimates with standard deviation and 95% credible interval information for a Bayesian linear mixed-effects model predicting log reaction time to select the target in both the original and replication samples.")
 ```
 
-With increasing age, children computed both implicatures and unambiguous meanings and identified the target faster (Figure \@ref(fig:rt)). Bayesian linear mixed-effects models predicting reaction time based on age, trial type and number of features were conducted separately in the original sample and replication sample, and showed a positive two-way interaction between age and implicature trial (Table \@ref(tab:brmrt_sample1) and Table \@ref(tab:brmrt_sample2)), indicating that reaction time on implicature trials did not improve with age as much as the speed of processing unambiguous meanings. This interaction was also shown in an exploratory Bayesian linear mixed-effects model on the combined datasets with both samples (Table \@ref(tab:brmrt)). Together with the accuracy finding, this result suggests that though children become proficient at determining the *correct* target referents for ad-hoc implicatures by 5 years, implicature processing develops relatively more slowly. 
+With increasing age, children computed both implicatures and unambiguous meanings and identified the target faster (Figure \@ref(fig:rt)). Bayesian linear mixed-effects models predicting reaction time based on age, trial type and number of features were conducted separately in the original sample and replication sample, and showed a positive two-way interaction between age and implicature trial (Table \@ref(tab:brmrtSample1) and Table \@ref(tab:brmrtSample2)), indicating that reaction time on implicature trials did not improve with age as much as the speed of processing unambiguous meanings. This interaction was also shown in an exploratory Bayesian linear mixed-effects model on the combined datasets with both samples (Table \@ref(tab:brmrt)). Together with the accuracy finding, this result suggests that though children become proficient at determining the *correct* target referents for ad-hoc implicatures by 5 years, implicature processing develops relatively more slowly. 
 
 In two of the three models (the model on the replication sample only and the model on both datasets together), we also observed a positive two-way interaction between control-double trials and number of features, indicating that children took longer to identify the target in control-double trials with more features than in control-single trials with more features. 
 
 There was no interaction between inference trials and number of features, or between inference trial, age and number of features, however. Why would this be? We did not have a pre-specified hypothesis regarding this pattern of data, but we speculate that once a feature is named (e.g., Elmo’s lunchbox has an apple), it is relatively easier to find the feature in an inferential target image than in the distractor image. The target feature is by itself in the target referent, whereas it is grouped with with other features in the distractor. Thus, the inference trials may allow easy perceptual access to the target feature but also competition with the overall perceptual salience of the distractor. These factors might cancel one another out and lead to undifferentiated reaction times and hence the lack of reaction time interactions. The potential advantage of identifying a feature when it is by itself is only speculative, however, and should be examined further in future work.  
+
+## Reliability 
 
 ```{r psych_alpha_fn}
 source(here("data_ana/compute_cronbach_alpha.R"))
@@ -771,7 +773,7 @@ d_alpha_rt_summary <- rbind(d_alpha_rt_2y, d_alpha_rt_3y, d_alpha_rt_4y, d_alpha
 
 ```
 
-```{r alpha_table, echo = F, results = 'asis'}
+```{r alphaTable, echo = F, results = 'asis'}
 d_alpha_all_summary <- left_join(d_alpha_summary, d_alpha_rt_summary)
 
 alpha.tab <- as.data.frame(d_alpha_all_summary) %>%
@@ -782,6 +784,7 @@ colnames(alpha.tab) <- c("Age bin", "$M$ trials", "$\\alpha_{acc}$", "$\\alpha_{
 apa_table(alpha.tab, escape=FALSE, caption = "Standardized reliability coefficients (Cronbach\'s $\\alpha$) for accuracy (acc) and reaction time (RT) by age group, along with the mean number of trials for each")
 ```
 
+As specified in our preregistered protocol, we measured Cronbach’s alpha, a statistic that determines the internal consistency of experimental items [@santos1999cronbach]. We selected the 12 control trials and computed a reliability coefficient for each age group, for both RTs and accuracies. Reliabilities are shown in \@ref(tab:alphaTable). Reliabilities were generally reasonable, even though the reliabilities were lower for 4- and 5-year-olds who performed at ceiling and thus made few errors that distinguished between individuals [replicating results from @frank2016].
 
 # Discussion
 
