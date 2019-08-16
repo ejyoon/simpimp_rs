@@ -1,0 +1,137 @@
+﻿subid,keep_drop,reason_drop,consent,consent-vid,dob,age_group,sex,hispanic_latino,Race,English,lang1,lang2,lang3,parent1_ed,parent2_ed,preemie,comment,dot,age
+180125_1,drop,technical error,Y,Y,12/23/15,2,F,N,White,75,French,NA,NA,some graduate school,graduate degree,N,,1/25/18,2.09
+180125_2,keep,NA,Y,Y,2/26/12,5,F,N,Japanese/White,75,Japanese,NA,NA,some college,some college,N,,1/25/18,5.92
+180125_3,keep,NA,Y,N (sharing),1/29/15,2,M,N,Asian,90-95,Spanish,NA,NA,four year college,four year college,N,,1/25/18,2.99
+180125_4,keep,NA,Y,Y,2/14/15,2,F,N,Asian,90-95,NA,NA,NA,graduate degree,four year college,N,,1/25/18,2.95
+180125_5,drop,not the parent,Y,N,1/15/14,4,F,Y,White,90-95,Spanish,NA,NA,four year college,NA,N,,1/25/18,4.03
+180126_1,drop,not the parent,Y,N,12/24/15,2,F,N,Asian/White,100,NA,NA,NA,graduate degree,NA,N,,1/26/18,2.09
+180126_2,drop,fussiness,Y,Y,8/10/15,2,F,N,White,100,NA,NA,NA,graduate degree,graduate degree,N,,1/26/18,2.47
+180126_3,drop,technical error,Y,N,11/8/14,3,F,N,Asian,90-95,Chinese,NA,NA,four year college,some college,N,,1/26/18,3.22
+180126_4,keep,NA,Y,Y,2/18/13,4,M,N,White,100,NA,NA,NA,four year college,graduate degree,N,,1/26/18,4.94
+180201_1,keep,NA,Y,Y,6/26/15,2,F,N,White,100,NA,NA,NA,graduate degree,four year college,N,,2/1/18,2.61
+180201_2,drop,fussiness,Y,N,11/28/14,3,M,N,Asian,five-ten,Chinese,NA,NA,graduate degree,graduate degree,N,,2/1/18,3.18
+180206_1,keep,NA,Y,N,8/22/13,4,M,N,Asian,50,mandarine,NA,NA,four year college,four year college,N,mistakenly put 06 instead of 07 into the app,2/6/18,4.46
+180207_2,keep,only went through half of the trials. ,Y,Y,1/4/15,3,F,Y,Asian,25,Japanese,NA,NA,graduate degree,graduate degree,N,,2/7/18,3.1
+180207_3,keep,NA,Y,Y,5/31/14,3,M,N,White,100,NA,NA,NA,four year college,four year college,N,seemed to favor the L picture most of the time,2/7/18,3.69
+180208_1,keep,NA,Y,Y,7/5/14,3,F,Y,Asian/White,100,Chinese,Spanish,NA,graduate degree,four year college,N,,2/8/18,3.6
+180208_3,keep,NA,Y,Y,10/10/14,3,M,N,White,100,Spanish,NA,NA,four year college,some college,N,,2/8/18,3.33
+180208_4,drop,fussiness,Y,Y,9/5/15,2,M,N,Asian,50,Hindi,NA,NA,graduate degree,graduate degree,N,,2/8/18,2.43
+180208_5,drop,technical error,Y,Y,9/22/14,3,F,N,Asian,25,Manderin,NA,NA,four year college,four year college,N,,2/8/18,3.38
+180209_1,keep,NA,Y,Y,3/13/15,2,M,N,Asian,five-ten,Mandarin,NA,NA,graduate degree,graduate degree,N,,2/9/18,2.92
+180209_2,keep,NA,Y,Y,7/11/15,2,F,Y,White/Other (Latin),90-95,Portuguese,Spanish,NA,graduate degree,graduate degree,N,,2/9/18,2.59
+180209_3,keep,NA,Y,N,4/26/14,3,F,N,White,25,Polish,NA,NA,graduate degree,graduate degree,N,,2/9/18,3.79
+180209_4,keep,NA,Y,Y,10/17/15,2,F,N,White,100,NA,NA,NA,graduate degree,graduate degree,N,,2/9/18,2.32
+180209_5,drop,technical error,Y,Y,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,2/9/18,NA
+180209_6,keep,NA,Y,Y,"6/28/16 (the dad said he was 3, so I think he put the wrong year)",?,M,N,White,100,NA,NA,NA,graduate degree,graduate degree,N,"dad wanted the door open, his other kids were outside the room. ",2/9/18,NA
+180214_1,keep,NA,Y,Y,8/28/15,2,F,N,Asian,25,Korean,NA,NA,graduate degree,graduate degree,N,,2/14/18,2.47
+180214_2b,keep,NA,Y,Y,1/27/15,3,F,N,White,75,Spanish (<30 hrs a week),NA,NA,four year college,graduate degree,N,,2/14/18,3.05
+180214_3,drop,parental interference,Y,Y,8/16/14,3,M,N,Asian,25,Korean,NA,NA,four year college,graduate degree,Y,,2/14/18,3.5
+180214_4,keep,NA,Y,Y,5/3/15,2,M,N,White,100,French,NA,NA,"four year college, some graduate school",four year college,N,,2/14/18,2.79
+180214_5,keep,NA,Y,Y,11/1/14,3,F,Y,NA,75,Spanish,NA,NA,some college,some college,N,,2/14/18,3.29
+180215_1,keep,NA,Y,Y,5/NA/13,4,F,N,Asian,90-95,English,guyurati (not sure about the spelling,NA,four year college,four year college,Y,,2/15/18,NA
+180215_2,keep,NA,Y,Y,5/4/14,3,F,N,White,50,German,NA,NA,graduate degree,graduate degree,N,,2/15/18,3.79
+180215_3,keep,NA,Y,Y,10/14/13,4,F,N,Asian/White,100,Tagalog,NA,NA,four year college,four year college,N,,2/15/18,4.34
+180215_4,keep,NA,Y,Y,4/13/15,2,M,Y,White,90-95,Spanish,NA,NA,high school,decline to state,N,,2/15/18,2.85
+180216_1,keep,NA,Y,Y,4/6/12,5,M,N,decline to state,100,Spanish (school,NA,NA,graduate degree,graduate degree,N,,2/16/18,5.87
+180216_2,keep,NA,Y,Y,6/16/13,4,M,N,White,100,NA,NA,NA,graduate degree,four year college,N,,2/16/18,4.67
+180216_3,keep,NA,Y,Y,3/26/15,2,M,N,White/Other (Filipino),100,NA,NA,NA,four year college,four year college,N,,2/16/18,2.9
+180216_4,keep,NA,Y,Y,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,2/16/18,NA
+180221_1,keep,NA,Y,Y,1/16/14,4,M,N,Asian,90-95,Chinese,NA,NA,graduate degree,graduate degree,N,,2/21/18,4.1
+180221_2,keep,NA,Y,Y,9/22/14,3,M,N,White,100,none,NA,NA,graduate degree,graduate degree,N,,2/21/18,3.42
+180221_3,keep,NA,Y,Y,7/25/12,5,M,N,White,100,NA,NA,NA,graduate degree,graduate degree,N,,2/21/18,5.58
+180221_4,keep,NA,Y,Y,3/15/15,2,M,N,White,100,NA,NA,NA,graduate degree,some college,N,,2/21/18,2.94
+180221_5,keep,NA,Y,Y,2/25/14,3,M,N,White,100,NA,NA,NA,graduate degree,graduate degree,N,,2/21/18,3.99
+180221_6,keep,NA,Y,Y,12/27/13,4,M,N,Asian,100,NA,NA,NA,four year college,some college,Y,,2/21/18,4.16
+180221_7,drop,prior exposure to expt,Y,Y,12/27/13,4,M,N,Asian,100,NA,NA,NA,four year college,some college,Y,,2/21/18,4.16
+180222_1,keep,NA,Y,Y,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,2/22/18,NA
+180222_2,keep,NA,Y,N,11/8/14,3,M,N,White,90-95,Mandarin- at preschool Chinese,NA,NA,four year college/some graduate school,some college,Y,,2/22/18,3.29
+180222_3,keep,NA,Y,Y,8/11/15,2,F,N,White,100,NA,NA,NA,some college,high school,Y,,2/22/18,2.54
+180222_4,keep,NA,Y,NA,9/6/14,3,F,N,White,100,NA,NA,NA,some graduate school,four year college,N,,2/22/18,3.47
+180222_5,keep,NA,Y,Y,4/9/14,3,M,N,White,50,Swedish,Afrikaans,NA,graduate degree,some graduate school,N,,2/22/18,3.88
+180222_6,keep,NA,Y,Y,4/9/14,3,M,N,White,50,Swedish,Afrikaans,NA,graduate degree,some graduate school,N,,2/22/18,3.88
+180223_1,keep,NA,Y,N,4/10/15,2,F,N,White,100,NA,NA,NA,some college,some college,N,,2/23/18,2.88
+180223_2,keep,NA,Y,N,2/12/2012 (I think this is wrong because he and the mom said he was 3,?,M,Decline To State,decline to state,50,Mandarin,NA,NA,graduate degree,four year college,N,,2/23/18,NA
+180223_4 (180223_3 was a dry run),keep,NA,Y,Y,12/19/14,3,F,Y,White/Other (Mexican),100,NA,NA,NA,some college,some college,N,,2/23/18,3.18
+180301_1,keep,NA,Y,Y,7/23/13,4,M,N,White,25,German,NA,NA,graduate degree,graduate degree,N,,3/1/18,4.61
+180302_1,keep,NA,Y,Y,10/24/12,5,M,Y,Other (Hispanic/Caucasian),90-95,Spanish,NA,NA,four year college,high school,N,,3/2/18,5.36
+180302_2,keep,NA,Y,Y,12/17/14,3,F,Y,White,100,NA,NA,NA,graduate degree,graduate degree,N,,3/2/18,3.21
+180302_3,keep,NA,Y,N,12/30/14,3,F,N,White,100,NA,NA,NA,four year college,four year college,N,,3/2/18,3.17
+180302_4,keep,NA,Y,Y,8/4/14,3,F,N,Other (Portuguese/Greek),100,Portuguese,NA,NA,graduate degree,graduate degree,N,,3/2/18,3.58
+180302_5,keep,NA,Y,N,4/17/15,2,F,Y,NA,75,Spanish,NA,NA,high school,high school,N,,3/2/18,2.88
+180302_6,keep,NA,Y,Y,6/6/13,4,M,N,White,100,NA,NA,NA,high school,some college,NA,,3/2/18,4.74
+180302_7,keep,NA,Y,Y,2/5/15,3,F,N,White,100,NA,NA,NA,high school,some college,NA,,3/2/18,3.07
+180314_1,keep,NA,Y,Y,3/22/15,2,M,N,White,75,German,NA,NA,graduate degree,graduate degree,N,"had to switch to a different Ipad today since the one I typically use was taken back to lab. The new version of the kiosk app had a zoom function that wasn't present in the older version. So he zoomed accidentally a couple times, but I just unzoomed it and it was fine. ",3/14/18,2.98
+180315_1,keep,NA,Y,Y,5/1/15,2,F,N,Asian,75,Chinese,NA,NA,graduate degree,four year college,N,"hesitant to play at first so I showed her the dots, then she was happy to play.",3/15/18,2.87
+180315_2,keep,NA,Y,Y,1/26/14,4,M,N,White,100,NA,NA,NA,some college,four year college,N,"engaged, enjoyed seeing the different choices he could choose",3/15/18,4.13
+180315_3 and 180315_3b,drop,health issues,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,didn't fill out the demographic form because she was busy helping him with the game. You could tell he didn't really understand the game.,3/15/18,NA
+180315_4,keep,NA,Y,Y,7/22/12,5,M,N,White,100,NA,NA,NA,four year college,some college,N,seemed to take a little longer making the choices. ,3/15/18,5.65
+180315_5,keep,NA,Y,Y,5/18/15,2,M,N,Asian/White/Other (I couldn't understand the first word but it was ___ European),50,Spanish,NA,NA,some graduate school,graduate degree,N,"exclaimed things about sesame street during the game. Fell out of chair at one point but smiled and was fine, but I just had to retell him the target word for that trial.",3/15/18,2.83
+180315_6,keep,NA,Y,Y,1/23/15,3,F,Y,White,100,Spanish,NA,NA,graduate degree,graduate degree,N,"typically developing, sister has Down's Syndrome. Listened very intently, paid really good attention.",3/15/18,3.14
+180315_7,drop,health issues,Y,Y,6/23/12,5,F,Y,White,100,NA,NA,NA,graduate degree,graduate degree,N,"has Down's Syndrome. Made it halfway through the game. Did really well, was happy to play. ",3/15/18,5.73
+180321_1 and 180321_1b,drop,no demographic info,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"did not understand much English and started crying after the dot trial, so we didn't continue",3/21/18,NA
+180321_2,keep,NA,Y,Y,6/20/12,5,F,N,White,100,NA,NA,NA,four year college,four year college,N,"she and her mom walked in and wanted to play, so I let her. However, she is too old",3/21/18,5.75
+180321_3,keep,NA,Y,Y,7/11/12,5,F,N,Asian,90-95,Vietnamese,NA,NA,four year college,four year college,N,"she was a walk in and really wanted to play so I let her, only to find out she was too old.",3/21/18,5.7
+180321_4,keep,NA,Y,N,10/30/14,3,M,Y,White,90-95,NA,NA,NA,graduate degree,four year college,N,"really enthusiastic. Did well, but had to remind a few times not to touch before hearing the whole prompt",3/21/18,3.39
+180321_5,keep,NA,Y,Y,2/27/14,4,F,N,European/Indian,100,NA,NA,NA,graduate degree,graduate degree,N,paid really close attention to the game,3/21/18,4.06
+180321_6,keep,NA,Y,Y,3/19/15,3,F,N,White/Other(Iranian),100,Farsi,NA,NA,four year college,some college,N,really hyper. Did well in the beginning but had to keep reminding her constantly not to touch the choices before she heard the prompt,3/21/18,3.01
+180322_1,keep,NA,Y,Y,"7/2/18 (I think this is the wrong year, the mom said she is 2.5 years old)",2,F,N,Asian,25,Mandarin,NA,NA,some graduate school,some graduate school,N,"really attentive, mom said they barely speak English at home though",3/22/18,NA
+180322_2,keep,NA,Y,Y,8/11/15,2,M,N,White,100,NA,NA,NA,graduate degree,high school,N,"at the end, he was ""being silly"" with some of the easier choices by choosing the opposite one. But with all the ones with the same objects on both plates/houses, etc, he was eally thoughtful with his choice",3/22/18,2.61
+180322_3 and 180322_3b,keep,NA,Y,Y,1/22/15,3,F,N,White/Other (Middle Eastern),100,NA,NA,NA,graduate degree,four year college,N,"very early on, she swipped, causing the Ipad to quit the program. So, I restarted it She was very attentive and did well.",3/22/18,3.16
+180322_4,keep,NA,Y,N,3/22/14,4,M,N,White/Other (Iranian/Persian),75,Farsi/Persian,NA,NA,graduate degree,four year college,N,"very talkative. Kept asking me things like, ""Is this the truck (etc)?"" as if he was trying to test me instead of us testing him. I just told him to touch the target object each time and he listened.",3/22/18,4
+180322_5,keep,NA,Y,Y,7/21/13,4,F,N,White,100,NA,NA,NA,some college,some college,N,very quiet and attentive,3/22/18,4.67
+180322_6,keep,NA,Y,Y,1/27/14,4,F,N,Asian,75,Chinese,NA,NA,graduate degree,graduate degree,N,very quiet and attentive,3/22/18,4.15
+180322_7,drop,parental interference,Y,Y,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,very hyper and could not pay attention. Parent kept trying to help daughter to focus so she didn't have time to fill out a demographic form. ,3/22/18,NA
+180323_1,keep,NA,Y,N,7/6/13,4,F,N,White,100,NA,NA,NA,graduate degree,four year college,N,paid close attention,3/23/18,4.72
+180323_2,keep,NA,Y,N,5/20/14,3,M,N,White,100,NA,NA,NA,graduate degree,four year college,N,"hesitant at first, but then did great",3/23/18,3.84
+180323_3,keep,NA,Y,Y,4/16/13,4,F,N,Other (British White),100,NA,NA,NA,graduate degree,graduate degree,N,very attentive and enjoyed the game a lot,3/23/18,4.94
+180323_4,keep,NA,Y,Y,9/9/14,3,F,N,Other (British White),100,NA,NA,NA,graduate degree,graduate degree,N,attentive,3/23/18,3.54
+180323_5,keep,NA,Y,Y,5/9/14,3,F,N,White,75,French,NA,NA,graduate degree,four year college,N,"attentive, enjoyed the game",3/23/18,3.87
+180328_1,keep,NA,Y,Y,12/11/14,3,F,N,Asian,50,NA,NA,NA,four year college,some college,N,the brother was a little distracting but the participant paid close attention to the game,3/28/18,3.3
+180328_2,keep,NA,Y,Y,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"the mom forgot to fill out a demographics form, but he told me he was four years old",3/28/18,NA
+180328_3,keep,NA,Y,Y,10/5/15,2,M,N,Native Hawaiian or other Pacific Islander/White,100,NA,NA,NA,some college,some college,N,"paid attention well, except when distracted by the red car ""daddy's car!""",3/28/18,2.48
+180328_4,keep,NA,Y,Y,5/21/15,2,F,Y,White,90-95,Spanish,NA,NA,four year college,some college,N,"a few times, I wasn't sure if she was paying super close attention because she answered quickly with some ""wrong"" answers. I couldn't tell though. ",3/28/18,2.85
+180328_5,keep,NA,Y,Y,8/4/14,3,M,N,Other (Indian (India)),100,NA,NA,NA,NA,some college,Y,paid close attention,3/28/18,3.65
+180329_1,keep,NA,Y,N,9/27/12,5,M,N,Other (Asian/Irish),100,Gaelic,NA,NA,graduate degree,graduate degree,N,"interested in the game, talkative",3/29/18,5.5
+180329_2,drop,no demographic info,Y,N,NA,she told me she was 5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,paid attention,3/29/18,NA
+180330_1,keep,NA,Y,N,6/15/12 (I think this is the wrong bday because he told me he was 3),?,M,N,Black or African American/White,75,German,NA,NA,graduate degree,graduate degree,N,"a few times, he tried answering really quick, but overall paid attention",3/30/18,NA
+180330_2b,keep,NA,Y,N,7/25/13,4,M,Y,NA,75,Spanish,NA,NA,graduate degree,graduate degree,N,"attentive, enjoyed the game",3/30/18,4.68
+180330_4,keep,NA,Y,Y,6/30/15,2,F,N,Asian,75,Mandarin,NA,NA,graduate degree,four year college,N,"the game glitched and wouldn't work after restarting it 3 times. But, when I figured out the problem, they came back and did the game. (she was also labeled under 180330_3, 180330_3b, 180330_3c) she paid attention well.",3/30/18,2.75
+180330_5b,keep,NA,Y,Y,8/6/15,2,F,N,Asian/White,90-95,Mandarin,NA,NA,graduate degree,graduate degree,N,"early in the game, the child exited out of the app accidentaly, so we restarted. She was really happy playing the game",3/30/18,2.65
+180330_6,keep,NA,Y,Y,11/1/14,3,F,N,Asian/White,75,Mandarin,NA,NA,graduate degree,graduate degree,N,"enjoyed the game, liked taking note of the colors of the plate, house, table, etc. but paid close attention",3/30/18,3.41
+180330_7,drop,parental interference,Y,Y,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"family intervened too much (parents and sister), and he lost interest quickly and wanted to stop playing the game. Also, it was really hectic and the parent didn't fill out the demographic form.",3/30/18,NA
+180330_8,keep,NA,Y,Y,4/7/13,4,F,N,Asian,100,Cantonese,NA,NA,graduate degree,some college,Y,"a little bored with game, but she paid attention well",3/30/18,4.98
+180404_1,keep,NA,Y,Y,11/4/13,4,M,N,White,100,NA,NA,NA,graduate degree,graduate degree,N,"quiet, listened well",4/4/18,4.42
+180404_2,keep,NA,Y,Y,7/15/14,3,M,N,White,90-95,some preschool classmates speak mandarin,NA,NA,some graduate school,graduate degree,N,"enjoyed the game, he had a plush animal that was ""watching him play the game""",4/4/18,3.72
+180404_3,drop,autistic,Y,Y,6/20/14,3,M,N,white,90-95,Spanish,NA,NA,graduate degree,graduate degree,N,"he did really well, but it was hard for him to focus and his brother answered a couple trials for him",4/4/18,3.79
+180404_4,keep,NA,Y,Y,6/24/14,3,F,N,Asian/White,75,Korean,NA,NA,graduate degree,graduate degree,N,listened well,4/4/18,3.78
+180404_5,keep,NA,Y,N,6/5/14,3,F,N,Asian,100,NA,NA,NA,some college,some college,N,"did great, listened well",4/4/18,3.83
+180404_6,drop,quickly exited the app halfway through before I could stop her,Y,Y,9/9/14,3,NA,Y,White,100,NA,NA,NA,four year college,four year college,N,"didn't listen well, kept wanting to answer while the voice was still speaking",4/4/18,3.57
+180404_7,keep,NA,Y,N,7/14/14,3,M,N,White,100,NA,NA,NA,graduate degree,four year college,N,"really excited to play, did well",4/4/18,3.72
+180405_1,keep,NA,Y,Y,10/20/13,4,F,Y,NA,75,NA,NA,NA,graduate degree,high school,N,did great,4/5/18,4.46
+180405_2,drop,language,Y,N,6/20/13,4,F,Y,Other,50,Spanish,NA,NA,NA,high school,N,"did well, but lang requirement not met",4/5/18,4.79
+180406_1,keep,NA,Y,Y,12/29/14,3,M,N,Asian/White,75,Vietnamese,NA,NA,graduate degree,graduate degree,N,listened well,4/6/18,3.27
+180406_2,keep,NA,Y,Y,12/3/14,3,M,N,White,100,NA,NA,NA,graduate degree,some college,N,"very excited and high energy. Would yell out ""car"" or ""banana"" etc. did well",4/6/18,3.34
+180406_3,keep,NA,Y,Y,1/12/16,2,F,N,White,100,NA,NA,NA,graduate degree,four year college,N,lost interest in last couple of trials but still answered them. Did well and paid attention well overall,4/6/18,2.23
+180406_4,keep,NA,Y,N,10/21/14,3,F,N,Other (Chinese/White),100,NA,NA,NA,graduate degree,graduate degree,N,did well,4/6/18,3.46
+180406_6b,drop,language,Y,Y,5/14/13,4,F,N,Asian,50,Cantonese,NA,NA,four year college,graduate degree,N,"game glitched a lot, had to restard the app a few times. Eventually worked though. Participant and mom were really patient.",4/6/18,4.89
+180406_7,keep,NA,Y,Y,5/23/14,3,M,Y,NA,90-95,Spanish,NA,NA,some college,grade school,N,"did great, first couple slides glitched but it was fine after",4/6/18,3.87
+180406_8,keep,NA,Y,Y,12/25/13,4,M,N,White,75,Italian ,Georgian,NA,graduate degree,graduate degree,N,"very excited, liked talking about the different objects. Paid attention well though",4/6/18,4.28
+180406_9,keep,NA,Y,Y,12/16/13,4,M,N,White,100,NA,NA,NA,four year college,four year college,N,did well,4/6/18,4.31
+180406_10,keep,NA,Y,N,9/11/14,3,F,N,Asian/Native Hawaiian or other Pacific Islander,90-95,Tagalog,Tongan,NA,some college,some college,N,kept having to tell her not to touch before the voice stopped speaking. But she did well and listened to me.,4/6/18,3.57
+180411_1,keep,NA,Y,Y,1/16/15,3,F,Y,White,75,Portuguese,NA,NA,four year college,four year college,N,quiet. Did well ,4/11/18,3.24
+180412_1,drop,too old,Y,Y,5/29/12,5,M,N,Black or African American/White,100,NA,NA,NA,four year college,four year college,N,enjoyed the game a lot,4/12/18,5.87
+180412_2,drop,no demographic info,Y,N,NA,NA,F,N,White,75,Hebrew,NA,NA,graduate degree,graduate degree,N,"dad said she was 2, but didn't want to put full bday.",4/12/18,NA
+180412_3,keep,NA,Y,N,4/10/14,4,M,Y,White,100,NA,NA,NA,graduate degree,four year college,N,very dramatic when choosing answers. Happy to play,4/12/18,4.01
+180412_4,keep,NA,Y,N,1/8/14,4,M,N,White,100,NA,NA,NA,some college,some college,N,"did well, really focused",4/12/18,4.26
+180412_5,keep,NA,Y,Y,11/22/13,4,F,N,White,100,NA,NA,NA,graduate degree,graduate degree,N,"did well, quiet",4/12/18,4.39
+180413_1,keep,NA,Y,Y,3/9/16,2,M,Y,NA,75,Spanish,NA,NA,some graduate school,some college,N,so enthusiastic!,4/13/18,2.09
+180418_1,keep,NA,Y,Y,12/31/13,4,F,N,Asian,90-95,Manderin,NA,NA,graduate degree,graduate degree,N,did well. Her siblings were a little distracting with a little talking and coming close to the Ipad a couple times but the participant really focused well and didn’t pay attention to them. ,4/18/18,4.3
+180418_2b,keep,NA,Y,Y,4/15/16,2,M,N,Asian,90-95,Mandarin,NA,NA,graduate degree,graduate degree,N,"a little difficut to keep him focused and I had to call him back to the chair once, but he did really well overall",4/18/18,2.01
+180418_3,keep,NA,Y,Y,2/21/14,4,F,N,Asian/White,100,NA,NA,NA,four year college,graduate degree,N,"did well, focused",4/18/18,4.16
+180418_4,keep,NA,Y,Y,2/21/14,4,M,N,Asian/White,100,NA,NA,NA,four year college,graduate degree,N,"enjoyed the game, did well",4/18/18,4.16
+180418_5,keep,NA,Y,Y,9/5/13,4,M,N,Asian,100,Tagalog,Spanish,NA,some college,some college,N,did well,4/18/18,4.62
+180419_1,keep,NA,Y,Y,6/30/15,2,M,N,Asian,25,Mandarin,NA,NA,graduate degree,graduate degree,N,didn't understand many of the terms,4/19/18,2.8
+180419_dryrun,keep,NA,Y,Y,4/2/13,5,M,N,Asian,100,NA,NA,NA,four year college,four year college,N,"too old. Initially it was hectic because all three siblings were in here and I thought he was 4 so I had the parent sign the form. Also, hence the strange SubjID",4/19/18,5.05
+180419_3,keep,NA,Y,Y,8/18/15,2,M,N,Asian,100,NA,NA,NA,four year college,four year college,N,"did well, listened well. ",4/19/18,2.67
+180420_1,keep,NA,Y,Y,10/19/15,2,F,N,Asian,75,English,Mandarine,Cantonese,four year college,four year college,N,goofing off at the end by choosing a picture but then trying to choose the other before it disappeared. ,4/20/18,2.5
+180420_2,keep,NA,Y,Y,10/2/15,2,F,N,White,75,Spanish,NA,NA,graduate degree,graduate degree,N,did well,4/20/18,2.55
